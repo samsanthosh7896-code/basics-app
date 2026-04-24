@@ -10,17 +10,6 @@ const PRECACHE_URLS = [
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './fonts/Fraunces-SemiBold.woff2',
-  './fonts/Fraunces-Bold.woff2',
-  './fonts/Fraunces-ExtraBold.woff2',
-  './fonts/DMSans-Regular.woff2',
-  './fonts/DMSans-Medium.woff2',
-  './fonts/DMSans-SemiBold.woff2',
-  './fonts/DMSans-Bold.woff2',
-  './fonts/IBMPlexMono-Regular.woff2',
-  './fonts/IBMPlexMono-Medium.woff2',
-  './fonts/IBMPlexMono-SemiBold.woff2',
-  './fonts/IBMPlexMono-Bold.woff2',
 ];
 
 /* ── INSTALL: pre-cache all assets ── */
