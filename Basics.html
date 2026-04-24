@@ -7,9 +7,21 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#0D9488">
 <title>Basics</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
+@font-face { font-family:'Fraunces'; src:url('fonts/Fraunces-SemiBold.woff2') format('woff2'); font-weight:600; font-display:swap; }
+@font-face { font-family:'Fraunces'; src:url('fonts/Fraunces-Bold.woff2') format('woff2'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Fraunces'; src:url('fonts/Fraunces-ExtraBold.woff2') format('woff2'); font-weight:800; font-display:swap; }
+@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-Regular.woff2') format('woff2'); font-weight:400; font-display:swap; }
+@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-Medium.woff2') format('woff2'); font-weight:500; font-display:swap; }
+@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-SemiBold.woff2') format('woff2'); font-weight:600; font-display:swap; }
+@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-Bold.woff2') format('woff2'); font-weight:700; font-display:swap; }
+@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-Regular.woff2') format('woff2'); font-weight:400; font-display:swap; }
+@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-Medium.woff2') format('woff2'); font-weight:500; font-display:swap; }
+@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-SemiBold.woff2') format('woff2'); font-weight:600; font-display:swap; }
+@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-Bold.woff2') format('woff2'); font-weight:700; font-display:swap; }
+</style>
 
 /* ════════════════════════════════════
    RESET
@@ -1995,6 +2007,15 @@ window.addEventListener('load', ()=>{
   home.style.transition = 'opacity .3s';
   requestAnimationFrame(()=>{ home.style.opacity = '1'; });
 });
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(r => console.log('[SW] Registered'))
+        .catch(e => console.warn('[SW] Failed', e));
+    });
+  }
 </script>
 </body>
 </html>
