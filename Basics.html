@@ -4,26 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#0D9488">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
-<title>Basics</title>
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
-@font-face { font-family:'Fraunces'; src:url('fonts/Fraunces-SemiBold.woff2') format('woff2'); font-weight:600; font-display:swap; }
-@font-face { font-family:'Fraunces'; src:url('fonts/Fraunces-Bold.woff2') format('woff2'); font-weight:700; font-display:swap; }
-@font-face { font-family:'Fraunces'; src:url('fonts/Fraunces-ExtraBold.woff2') format('woff2'); font-weight:800; font-display:swap; }
-@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-Regular.woff2') format('woff2'); font-weight:400; font-display:swap; }
-@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-Medium.woff2') format('woff2'); font-weight:500; font-display:swap; }
-@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-SemiBold.woff2') format('woff2'); font-weight:600; font-display:swap; }
-@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-Bold.woff2') format('woff2'); font-weight:700; font-display:swap; }
-@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-Regular.woff2') format('woff2'); font-weight:400; font-display:swap; }
-@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-Medium.woff2') format('woff2'); font-weight:500; font-display:swap; }
-@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-SemiBold.woff2') format('woff2'); font-weight:600; font-display:swap; }
-@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-Bold.woff2') format('woff2'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Fraunces'; src:url('fonts/Fraunces-SemiBold.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face { font-family:'Fraunces'; src:url('fonts/Fraunces-Bold.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'Fraunces'; src:url('fonts/Fraunces-ExtraBold.woff2') format('woff2'); font-weight:800; font-style:normal; font-display:swap; }
+@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-Medium.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-SemiBold.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-Bold.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-Medium.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-SemiBold.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-Bold.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
 </style>
+<title>Basics</title>
+
+<style>
 
 /* ════════════════════════════════════
    RESET
@@ -815,59 +816,6 @@ body.dark {
 }
 
 /* ════════════════════════════════════
-   PRIME 10×10 GRID
-════════════════════════════════════ */
-.prime-grid-wrap {
-  padding: 14px 12px 16px;
-  border-top: 1px solid var(--border);
-  background: var(--surface);
-}
-.prime-legend {
-  display: flex; align-items: center; gap: 14px;
-  margin-bottom: 12px; padding: 0 2px;
-}
-.prime-legend-dot {
-  width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0;
-}
-.prime-legend-dot.prime  { background: var(--accent); }
-.prime-legend-dot.composite { background: var(--border2); }
-.prime-legend-lbl {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: .58rem; font-weight: 600; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--sub);
-}
-.prime-grid {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  gap: 4px;
-}
-.prime-cell {
-  aspect-ratio: 1;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 6px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: clamp(.55rem, 2.4vw, .78rem);
-  font-weight: 700;
-  transition: transform .1s;
-  cursor: default;
-  line-height: 1;
-}
-.prime-cell.is-prime {
-  background: var(--accent);
-  color: var(--accent-fg);
-  box-shadow: 0 2px 8px rgba(13,148,136,.35);
-}
-body.dark .prime-cell.is-prime {
-  box-shadow: 0 2px 10px rgba(20,184,166,.4);
-}
-.prime-cell.not-prime {
-  background: var(--bg2);
-  color: var(--sub);
-  opacity: .45;
-}
-.prime-cell.is-prime:hover { transform: scale(1.12); }
-
-/* ════════════════════════════════════
    TEST RESULT REVIEW LIST
 ════════════════════════════════════ */
 .review-card {
@@ -1382,33 +1330,6 @@ function renderLearn(){
           }
           grid.appendChild(col1); grid.appendChild(col2);
           tbody.appendChild(grid);
-        } else if(subKey === 'primeref'){
-          // ── Prime numbers: 10×10 square grid 1–100 ──
-          const PRIMES = new Set([2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97]);
-          const wrap = document.createElement('div');
-          wrap.className = 'prime-grid-wrap';
-
-          // Legend
-          const legend = document.createElement('div');
-          legend.className = 'prime-legend';
-          legend.innerHTML = `
-            <span class="prime-legend-dot prime"></span>
-            <span class="prime-legend-lbl">Prime</span>
-            <span class="prime-legend-dot composite" style="margin-left:8px"></span>
-            <span class="prime-legend-lbl">Composite / 1</span>
-          `;
-          wrap.appendChild(legend);
-
-          const grid = document.createElement('div');
-          grid.className = 'prime-grid';
-          for(let n = 1; n <= 100; n++){
-            const cell = document.createElement('div');
-            cell.className = 'prime-cell ' + (PRIMES.has(n) ? 'is-prime' : 'not-prime');
-            cell.textContent = n;
-            grid.appendChild(cell);
-          }
-          wrap.appendChild(grid);
-          tbody.appendChild(wrap);
         } else {
           // 2-column grid for all other content
           const allRows = [];
@@ -2014,8 +1935,8 @@ window.addEventListener('load', ()=>{
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./service-worker.js')
-        .then(r => console.log('[SW] Registered'))
-        .catch(e => console.warn('[SW] Failed', e));
+        .then(r => console.log('[SW] Registered, scope:', r.scope))
+        .catch(e => console.warn('[SW] Registration failed:', e));
     });
   }
 </script>
