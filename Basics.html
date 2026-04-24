@@ -623,14 +623,13 @@ body.dark {
 
 
 /* ────── Test: Results Phase ────── */
-#testResults { display: none; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
-#testResults.show { display: flex; }
+#testResults { display: none; flex-direction: column; }
+#testResults.show { display: flex; flex: 1; min-height: 0; }
 .results-scroll {
-  flex: 1; min-height: 0; overflow-y: auto;
-  -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain;
+  flex: 1; min-height: 0; overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   touch-action: pan-y; padding: 20px 14px calc(var(--safe-bottom) + 24px);
   display: flex; flex-direction: column; gap: 12px; align-items: center;
-  height: 100%;
 }
 .result-hero {
   width: 100%; max-width: 420px; text-align: center; padding: 8px 0 4px;
