@@ -1,9 +1,4 @@
-/* ============================================================
-   service-worker.js  —  Basics PWA  |  Cache-First Strategy
-   Cache name: basics-v1
-   ============================================================ */
-
-const CACHE_NAME = 'basics-v1';
+const CACHE_NAME = 'basics-v2';
 
 const PRECACHE_URLS = [
   './Basics.html',
@@ -12,7 +7,6 @@ const PRECACHE_URLS = [
   './icons/icon-512.png',
 ];
 
-/* ── INSTALL: pre-cache all assets ── */
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -21,7 +15,6 @@ self.addEventListener('install', event => {
   );
 });
 
-/* ── ACTIVATE: purge old caches ── */
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
@@ -32,25 +25,14 @@ self.addEventListener('activate', event => {
   );
 });
 
-/* ── FETCH: cache-first, network fallback ── */
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
-
-      return fetch(event.request).then(networkResponse => {
-        if (
-          !networkResponse ||
-          networkResponse.status !== 200 ||
-          networkResponse.type === 'opaque'
-        ) return networkResponse;
-
-        const clone = networkResponse.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-        return networkResponse;
-      }).catch(() => caches.match('./Basics.html'));
-    })
+    caches.match('./Basics.html')
+      .then(cached => {
+        if (cached) return cached;
+        return fetch(event.request);
+      })
   );
 });
