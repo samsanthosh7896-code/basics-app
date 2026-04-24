@@ -626,13 +626,14 @@ body.dark {
 #testResults { display: none; flex-direction: column; }
 #testResults.show { display: flex; flex-direction: column; }
 .results-scroll {
+  flex: 1; min-height: 0;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y;
-  padding: 20px 14px calc(var(--safe-bottom) + 24px);
+  padding: 20px 14px calc(var(--safe-bottom) + 80px);
   display: flex; flex-direction: column;
   gap: 12px; align-items: center;
-  box-sizing: border-box;
+  width: 100%;
 }
 .result-hero {
   width: 100%; max-width: 420px; text-align: center; padding: 8px 0 4px;
@@ -1075,15 +1076,7 @@ body.dark .prime-cell.is-prime {
       <div class="options-grid" id="optionsGrid"></div>
     </div>
   </div>
-
-  <!-- Results phase -->
-  <div id="testResults">
-    <div class="results-scroll">
-      <div class="result-hero anim-slide">
-        <span class="result-emoji" id="resultEmoji">🎉</span>
-        <div class="result-title" id="resultTitle">Well done!</div>
-        <div class="result-sub" id="resultSub">Here's how you did</div>
-      </div>
+  </div><!-- end testResults placeholder -->
       <div class="result-stats-card anim-fade">
         <div class="result-stats-grid">
           <div class="result-stat"><span class="result-stat-val" id="rCorrect">-</span><span class="result-stat-lbl">Correct</span></div>
@@ -1091,10 +1084,6 @@ body.dark .prime-cell.is-prime {
           <div class="result-stat"><span class="result-stat-val" id="rScore">-</span><span class="result-stat-lbl">Score</span></div>
           <div class="result-stat"><span class="result-stat-val" id="rTotal">-</span><span class="result-stat-lbl">Total Qs</span></div>
         </div>
-      </div>
-      <div class="result-actions anim-fade">
-        <button class="result-btn" id="resultHome">Home</button>
-        <button class="result-btn pri" id="resultRetry">Try Again</button>
       </div>
       <div class="weak-result-card anim-fade" id="weakResultCard" style="display:none">
         <div class="weak-result-head">⚠️ Weak Areas Updated</div>
@@ -1118,6 +1107,42 @@ body.dark .prime-cell.is-prime {
     <div class="top-title" id="detailTitle">Table</div>
   </div>
   <div class="detail-body" id="detailBody"></div>
+</div>
+
+<!-- ══════════════ RESULTS (standalone screen) ══════════════ -->
+<div class="screen" id="sResults">
+  <div class="top-bar">
+    <button class="back-btn" id="resultsHomeBtn">‹</button>
+    <div class="top-title">Results</div>
+    <button class="icon-btn" id="resultsRetryBtn">↺</button>
+  </div>
+  <div class="results-scroll">
+    <div class="result-hero anim-slide">
+      <span class="result-emoji" id="resultEmoji">🎉</span>
+      <div class="result-title" id="resultTitle">Well done!</div>
+      <div class="result-sub" id="resultSub">Here's how you did</div>
+    </div>
+    <div class="result-stats-card anim-fade">
+      <div class="result-stats-grid">
+        <div class="result-stat"><span class="result-stat-val" id="rCorrect">-</span><span class="result-stat-lbl">Correct</span></div>
+        <div class="result-stat"><span class="result-stat-val" id="rWrong">-</span><span class="result-stat-lbl">Wrong</span></div>
+        <div class="result-stat"><span class="result-stat-val" id="rScore">-</span><span class="result-stat-lbl">Score</span></div>
+        <div class="result-stat"><span class="result-stat-val" id="rTotal">-</span><span class="result-stat-lbl">Total Qs</span></div>
+      </div>
+    </div>
+    <div class="weak-result-card anim-fade" id="weakResultCard" style="display:none;width:100%;max-width:420px">
+      <div class="weak-result-head">⚠️ Weak Areas Updated</div>
+      <div id="weakResultList"></div>
+    </div>
+    <div class="review-card anim-fade" id="reviewCard" style="display:none;width:100%;max-width:420px">
+      <div class="review-card-head">
+        <span>📋 Question Review</span>
+        <span id="reviewCardCount"></span>
+      </div>
+      <div id="reviewList"></div>
+    </div>
+    <div style="height:20px;flex-shrink:0"></div>
+  </div>
 </div>
 
 <!-- ══════════════ WEAK AREAS ══════════════ -->
@@ -1828,9 +1853,7 @@ function handleAnswer(chosen, qData){
 
 function showResults(){
   const quiz = document.getElementById('testQuiz');
-  const results = document.getElementById('testResults');
   quiz.classList.remove('show'); quiz.style.display = 'none';
-  results.classList.add('show'); results.style.display = '';
 
   const total = Q.questions.length;
   const pct = Math.round((Q.correct/total)*100);
@@ -1907,17 +1930,7 @@ function showResults(){
 
   updateHomeWeakSub();
 
-  // Fix scroll height explicitly for mobile
-  requestAnimationFrame(() => {
-    const topbar = document.querySelector('#sTest .test-topbar');
-    const scroll = document.querySelector('.results-scroll');
-    if (topbar && scroll) {
-      const topH = topbar.getBoundingClientRect().height;
-      const vh = window.innerHeight;
-      scroll.style.height = (vh - topH) + 'px';
-      scroll.style.maxHeight = (vh - topH) + 'px';
-    }
-  });
+  go('sResults');
 }
 
 /* ════════════════════════════════════
@@ -2096,19 +2109,18 @@ function bindAll(){
   document.getElementById('launchBtn').addEventListener('click', startQuiz);
 
   // Results
-  document.getElementById('resultHome').addEventListener('click', ()=>{
+  document.getElementById('resultsHomeBtn').addEventListener('click', ()=>{
     document.getElementById('testSetup').style.display = '';
     document.getElementById('testQuiz').classList.remove('show');
     document.getElementById('testQuiz').style.display = 'none';
-    document.getElementById('testResults').classList.remove('show');
-    document.getElementById('testResults').style.display = 'none';
     go('sHome');
   });
-  document.getElementById('resultRetry').addEventListener('click', ()=>{
-    document.getElementById('testResults').classList.remove('show');
-    document.getElementById('testResults').style.display = 'none';
+  document.getElementById('resultsRetryBtn').addEventListener('click', ()=>{
     document.getElementById('testSetup').style.display = '';
+    document.getElementById('testQuiz').classList.remove('show');
+    document.getElementById('testQuiz').style.display = 'none';
     if(!isWeakTest) updateLaunchBtn();
+    go('sTest');
   });
 
   // Weak screen
