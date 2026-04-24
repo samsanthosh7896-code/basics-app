@@ -623,13 +623,14 @@ body.dark {
 
 
 /* ────── Test: Results Phase ────── */
-#testResults { display: none; flex-direction: column; flex: 1; min-height: 0; }
+#testResults { display: none; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
 #testResults.show { display: flex; }
 .results-scroll {
-  flex: 1; min-height: 0; overflow-y: scroll;
-  -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  flex: 1; min-height: 0; overflow-y: auto;
+  -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain;
   touch-action: pan-y; padding: 20px 14px calc(var(--safe-bottom) + 24px);
   display: flex; flex-direction: column; gap: 12px; align-items: center;
+  height: 100%;
 }
 .result-hero {
   width: 100%; max-width: 420px; text-align: center; padding: 8px 0 4px;
@@ -912,6 +913,18 @@ body.dark .prime-cell.is-prime {
   color: var(--red); text-decoration: line-through;
 }
 
+
+/* ════════════════════════════════════
+   LEARN DETAIL SCREEN (full screen section view)
+════════════════════════════════════ */
+#sLearnDetail { overflow: hidden; }
+.detail-body {
+  flex: 1; min-height: 0; overflow-y: auto;
+  -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain;
+  touch-action: pan-y; background: var(--bg);
+  padding: 0 0 calc(var(--safe-bottom) + 24px);
+}
+
 /* ════════════════════════════════════
    ANIMATIONS
 ════════════════════════════════════ */
@@ -1094,6 +1107,15 @@ body.dark .prime-cell.is-prime {
       </div>
     </div>
   </div>
+</div>
+
+<!-- ══════════════ LEARN DETAIL ══════════════ -->
+<div class="screen" id="sLearnDetail">
+  <div class="top-bar">
+    <button class="back-btn" id="detailBack">‹</button>
+    <div class="top-title" id="detailTitle">Table</div>
+  </div>
+  <div class="detail-body" id="detailBody"></div>
 </div>
 
 <!-- ══════════════ WEAK AREAS ══════════════ -->
@@ -1363,6 +1385,9 @@ function renderLearn(){
     const tbody = sec.querySelector('.toggle-body');
 
     header.addEventListener('click', ()=>{
+      // Open full-screen detail view instead of inline expand
+      openLearnDetail(activeLearnCat, subKey, sub, isMult);
+      return;
       const isOpen = sec.classList.contains('open');
       if(!isOpen && !tbody.childElementCount){
         if(isMult){
@@ -1935,6 +1960,91 @@ function renderWeakScreen(){
   body.appendChild(legend);
 }
 
+
+/* ════════════════════════════════════
+   LEARN DETAIL — full screen section view
+════════════════════════════════════ */
+function openLearnDetail(catKey, subKey, sub, isMult){
+  const body = document.getElementById('detailBody');
+  const title = document.getElementById('detailTitle');
+  body.innerHTML = '';
+  title.textContent = sub.name;
+
+  if(isMult){
+    const n = sub.tableNum;
+    // Large readable table
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'padding: 8px 0;';
+    for(let i = 1; i <= 20; i++){
+      const row = document.createElement('div');
+      row.style.cssText = [
+        'display:flex',
+        'align-items:center',
+        'justify-content:space-between',
+        'padding:14px 24px',
+        'border-bottom:1px solid var(--border)',
+        i % 2 === 0 ? 'background:var(--surface)' : 'background:var(--bg)',
+      ].join(';');
+      row.innerHTML = `
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:1.05rem;color:var(--text);font-weight:600">${i} × ${n}</span>
+        <span style="font-family:'Fraunces',serif;font-size:1.4rem;font-weight:800;color:var(--accent-mid)">${i*n}</span>
+      `;
+      wrap.appendChild(row);
+    }
+    body.appendChild(wrap);
+  } else if(subKey === 'primeref'){
+    const PRIMES = new Set([2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97]);
+    const wrap = document.createElement('div');
+    wrap.className = 'prime-grid-wrap';
+    wrap.style.padding = '20px 16px';
+    const legend = document.createElement('div');
+    legend.className = 'prime-legend';
+    legend.innerHTML = `
+      <span class="prime-legend-dot prime"></span>
+      <span class="prime-legend-lbl">Prime</span>
+      <span class="prime-legend-dot composite" style="margin-left:8px"></span>
+      <span class="prime-legend-lbl">Composite / 1</span>
+    `;
+    wrap.appendChild(legend);
+    const grid = document.createElement('div');
+    grid.className = 'prime-grid';
+    grid.style.gap = '6px';
+    for(let n = 1; n <= 100; n++){
+      const cell = document.createElement('div');
+      cell.className = 'prime-cell ' + (PRIMES.has(n) ? 'is-prime' : 'not-prime');
+      cell.textContent = n;
+      grid.appendChild(cell);
+    }
+    wrap.appendChild(grid);
+    body.appendChild(wrap);
+  } else {
+    // Generic 2-col grid — shown as full single list for readability
+    const allRows = [];
+    sub.items.forEach(item => sub.rows(item).forEach(row => allRows.push(row)));
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'padding: 8px 0;';
+    allRows.forEach((row, i) => {
+      const r = document.createElement('div');
+      r.style.cssText = [
+        'display:flex',
+        'align-items:center',
+        'justify-content:space-between',
+        'padding:13px 24px',
+        'border-bottom:1px solid var(--border)',
+        i % 2 === 0 ? 'background:var(--surface)' : 'background:var(--bg)',
+      ].join(';');
+      r.innerHTML = `
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:.92rem;color:var(--text);font-weight:500">${row.q}</span>
+        <span style="font-family:'Fraunces',serif;font-size:1.2rem;font-weight:800;color:var(--accent-mid)">${row.a}</span>
+      `;
+      wrap.appendChild(r);
+    });
+    body.appendChild(wrap);
+  }
+
+  go('sLearnDetail');
+}
+
 /* ════════════════════════════════════
    BUTTON BINDINGS
 ════════════════════════════════════ */
@@ -1955,6 +2065,7 @@ function bindAll(){
 
   // Learn
   document.getElementById('learnBack').addEventListener('click', ()=>go('sHome'));
+  document.getElementById('detailBack').addEventListener('click', ()=>go('sLearn'));
 
   // Test back
   document.getElementById('testBack').addEventListener('click', ()=>{
