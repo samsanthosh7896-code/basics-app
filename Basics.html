@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#0D9488">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+/* ── Local @font-face declarations (replaces Google Fonts) ── */
+@font-face { font-family:'Fraunces'; src:url('fonts/Fraunces-SemiBold.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face { font-family:'Fraunces'; src:url('fonts/Fraunces-Bold.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'Fraunces'; src:url('fonts/Fraunces-ExtraBold.woff2') format('woff2'); font-weight:800; font-style:normal; font-display:swap; }
+@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-Medium.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-SemiBold.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face { font-family:'DM Sans'; src:url('fonts/DMSans-Bold.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-Medium.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-SemiBold.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face { font-family:'IBM Plex Mono'; src:url('fonts/IBMPlexMono-Bold.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
+</style>
+<title>Basics</title>
+
+<style>
+
+/* ════════════════════════════════════
+   RESET
+════════════════════════════════════ */
+*, *::before, *::after {
+  margin: 0; padding: 0; box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none; -webkit-user-select: none;
+}
+html { height: 100%; overflow: hidden; }
+body {
+  width: 100%; height: 100%; height: 100dvh;
+  overflow: hidden; background: var(--bg);
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: var(--text); transition: background .2s, color .2s;
+}
+
+/* ════════════════════════════════════
+   DESIGN TOKENS — LIGHT
+════════════════════════════════════ */
+:root {
+  --bg:        #F4F7F9;
+  --bg2:       #EBF0F4;
+  --surface:   #FFFFFF;
+  --surface2:  #F8FAFC;
+  --border:    #DDE4EC;
+  --border2:   #C5D0DC;
+  --text:      #0C1A26;
+  --text2:     #1E3040;
+  --muted:     #5A6E80;
+  --sub:       #8FA0B0;
+
+  --accent:        #0D9488;
+  --accent-mid:    #14B8A6;
+  --accent-light:  #F0FDFA;
+  --accent-border: #99F6E4;
+  --accent-fg:     #FFFFFF;
+
+  --green:        #059669;
+  --green-light:  #ECFDF5;
+  --green-border: #6EE7B7;
+  --red:          #DC2626;
+  --red-light:    #FEF2F2;
+  --red-border:   #FCA5A5;
+  --amber:        #D97706;
+  --amber-light:  #FFFBEB;
+  --amber-border: #FCD34D;
+  --purple:       #7C3AED;
+  --purple-light: #F5F3FF;
+  --purple-border:#C4B5FD;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius:    12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.04);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
+  --shadow:    0 2px 8px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.10), 0 2px 4px rgba(0,0,0,.05);
+
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ════════════════════════════════════
+   DESIGN TOKENS — DARK
+════════════════════════════════════ */
+body.dark {
+  --bg:        #090F14;
+  --bg2:       #111820;
+  --surface:   #18232E;
+  --surface2:  #1E2D3A;
+  --border:    #243344;
+  --border2:   #2E4058;
+  --text:      #EDF2F7;
+  --text2:     #B0C2D0;
+  --muted:     #6080A0;
+  --sub:       #3D5570;
+
+  --accent:        #14B8A6;
+  --accent-mid:    #2DD4BF;
+  --accent-light:  #0A2020;
+  --accent-border: #0D3838;
+  --accent-fg:     #FFFFFF;
+
+  --green:        #10B981;
+  --green-light:  #052E1A;
+  --green-border: #065F46;
+  --red:          #EF4444;
+  --red-light:    #2D0A0A;
+  --red-border:   #7F1D1D;
+  --amber:        #F59E0B;
+  --amber-light:  #2D1800;
+  --amber-border: #78350F;
+  --purple:       #A78BFA;
+  --purple-light: #1E1040;
+  --purple-border:#6D28D9;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.35);
+  --shadow:    0 2px 8px rgba(0,0,0,.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.5);
+}
+
+/* ════════════════════════════════════
+   SCREENS
+════════════════════════════════════ */
+.screen {
+  position: fixed; inset: 0;
+  display: none; flex-direction: column;
+  background: var(--bg); overflow: hidden;
+}
+.screen.show { display: flex; }
+
+/* ════════════════════════════════════
+   SHARED COMPONENTS
+════════════════════════════════════ */
+.top-bar {
+  display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+  padding: calc(var(--safe-top) + 14px) 16px 14px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.back-btn {
+  width: 36px; height: 36px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font-size: 1.1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; touch-action: manipulation;
+  transition: background .1s, transform .08s;
+}
+.back-btn:active { background: var(--bg2); transform: scale(.93); }
+.top-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--text); flex: 1; letter-spacing: -.01em;
+}
+.icon-btn {
+  width: 36px; height: 36px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: transparent;
+  color: var(--muted); font-size: .9rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  touch-action: manipulation; transition: all .1s;
+}
+.icon-btn:active { background: var(--bg2); transform: scale(.93); }
+
+/* Scrollable body pattern */
+.scroll-body {
+  flex: 1; min-height: 0; overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
+/* Mono label */
+.mono-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .58rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--sub);
+}
+
+/* ════════════════════════════════════
+   HOME SCREEN
+════════════════════════════════════ */
+#sHome { align-items: center; justify-content: center; }
+.home-inner {
+  width: 100%; max-width: 440px; height: 100%;
+  display: flex; flex-direction: column;
+  overflow-y: auto; -webkit-overflow-scrolling: touch; touch-action: pan-y;
+  padding: calc(var(--safe-top) + 28px) 18px calc(var(--safe-bottom) + 28px);
+}
+
+/* Hero */
+.home-hero {
+  display: flex; align-items: center; gap: 14px;
+  padding-bottom: 22px; margin-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+}
+.logo-mark {
+  width: 50px; height: 50px; flex-shrink: 0;
+  background: var(--accent); border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 12px rgba(13,148,136,.3);
+}
+.logo-mark svg { width: 28px; height: 28px; }
+.home-app-name {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem; font-weight: 800;
+  color: var(--text); line-height: 1; letter-spacing: -.03em;
+}
+.home-tagline {
+  font-size: .68rem; font-weight: 500; color: var(--sub);
+  letter-spacing: .05em; margin-top: 5px;
+  font-family: 'IBM Plex Mono', monospace; text-transform: uppercase;
+}
+
+/* Section label */
+.home-sec-lbl {
+  font-size: .58rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--sub);
+  font-family: 'IBM Plex Mono', monospace; padding: 0 2px 10px;
+}
+.home-gap { height: 18px; }
+
+/* Home cards */
+.home-cards-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; margin-bottom: 10px;
+}
+.hcard {
+  display: flex; flex-direction: column;
+  padding: 18px 16px 16px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  cursor: pointer; text-align: left; touch-action: manipulation;
+  box-shadow: var(--shadow-xs); min-height: 100px;
+  position: relative; overflow: hidden;
+  transition: transform .1s, box-shadow .1s;
+}
+.hcard:active { transform: scale(.97); box-shadow: none; }
+.hcard.accent {
+  background: var(--accent-mid); border-color: transparent;
+  box-shadow: 0 4px 16px rgba(20,184,166,.3);
+}
+.hcard.accent:active { background: var(--accent); }
+.hcard.teal {
+  background: var(--accent-light); border-color: var(--accent-border);
+}
+.hcard.full {
+  grid-column: 1/-1; flex-direction: row;
+  align-items: center; gap: 14px; min-height: 68px; padding: 16px;
+}
+.hcard-icon {
+  width: 38px; height: 38px; border-radius: var(--radius-sm);
+  background: var(--bg2); display: flex; align-items: center;
+  justify-content: center; font-size: 1.1rem; flex-shrink: 0;
+  margin-bottom: 14px;
+}
+.hcard.accent .hcard-icon { background: rgba(255,255,255,.2); }
+.hcard.teal .hcard-icon { background: var(--accent-border); }
+.hcard.full .hcard-icon { margin-bottom: 0; }
+.hcard-body { flex: 1; min-width: 0; }
+.hcard-title {
+  font-size: .9rem; font-weight: 700; color: var(--text);
+  line-height: 1.2; letter-spacing: -.01em;
+}
+.hcard.accent .hcard-title,
+.hcard.accent .hcard-sub { color: #fff; }
+.hcard.teal .hcard-title { color: var(--accent); }
+.hcard.teal .hcard-sub { color: var(--accent-mid); opacity: .8; }
+.hcard-sub {
+  font-size: .68rem; color: var(--muted); margin-top: 4px; line-height: 1.4;
+}
+.hcard-arrow { font-size: .9rem; opacity: .3; flex-shrink: 0; margin-left: auto; }
+.hcard.accent .hcard-arrow { opacity: .7; color: #fff; }
+.hcard.teal .hcard-arrow { color: var(--accent); opacity: .5; }
+
+/* Dark toggle on home */
+.home-bottom {
+  margin-top: auto; padding-top: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.theme-toggle {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 99px;
+  border: 1px solid var(--border); background: var(--surface);
+  cursor: pointer; touch-action: manipulation;
+  transition: all .1s; font-size: .72rem; color: var(--muted);
+  font-family: 'DM Sans', sans-serif; font-weight: 500;
+}
+.theme-toggle:active { transform: scale(.96); background: var(--bg2); }
+
+/* ════════════════════════════════════
+   LEARN SCREEN
+════════════════════════════════════ */
+#sLearn { overflow: hidden; }
+
+.learn-topbar {
+  display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+  padding: calc(var(--safe-top) + 12px) 16px 0;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.learn-topbar-row1 {
+  display: flex; align-items: center; gap: 10px; width: 100%; padding-bottom: 12px;
+}
+.learn-title-grp { flex: 1; min-width: 0; }
+.learn-screen-title {
+  font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 700;
+  color: var(--text); letter-spacing: -.01em;
+}
+.learn-screen-sub { font-size: .68rem; color: var(--muted); margin-top: 2px; }
+
+/* Category tabs */
+.learn-tabs {
+  display: flex; width: 100%; overflow-x: auto;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch; touch-action: pan-x;
+}
+.learn-tabs::-webkit-scrollbar { display: none; }
+.learn-tab {
+  padding: 10px 16px; font-size: .78rem; font-weight: 500;
+  color: var(--muted); background: transparent; border: none;
+  border-bottom: 2.5px solid transparent; cursor: pointer;
+  white-space: nowrap; flex-shrink: 0; min-height: 44px;
+  transition: color .12s, border-color .12s; touch-action: manipulation;
+}
+.learn-tab.active {
+  color: var(--accent-mid); border-bottom-color: var(--accent-mid); font-weight: 700;
+}
+.learn-tab:active { background: var(--bg2); }
+
+/* Learn body */
+.learn-body {
+  flex: 1; min-height: 0; overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  touch-action: pan-y; background: var(--bg);
+  padding: 0 0 calc(var(--safe-bottom) + 24px);
+}
+
+/* Toggle sections */
+.toggle-section {
+  margin: 12px 14px 0; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow-xs);
+}
+.toggle-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px; cursor: pointer; touch-action: manipulation;
+  background: var(--surface); border-bottom: 1px solid transparent;
+  transition: background .1s; user-select: none; -webkit-user-select: none;
+}
+.toggle-section.open .toggle-header { border-bottom-color: var(--border); }
+.toggle-header:active { background: var(--bg2); }
+.toggle-icon { font-size: 1rem; flex-shrink: 0; }
+.toggle-label {
+  flex: 1; font-size: .88rem; font-weight: 600;
+  color: var(--text); letter-spacing: -.01em;
+}
+.toggle-count {
+  font-family: 'IBM Plex Mono', monospace; font-size: .6rem;
+  color: var(--sub); font-weight: 500; flex-shrink: 0;
+}
+.toggle-chevron {
+  font-size: .75rem; color: var(--sub); flex-shrink: 0;
+  transition: transform .2s; display: inline-block;
+}
+.toggle-section.open .toggle-chevron { transform: rotate(90deg); }
+.toggle-body {
+  display: none; flex-direction: column;
+}
+.toggle-section.open .toggle-body { display: flex; }
+
+/* Learn rows */
+.learn-fact-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 16px; border-bottom: 1px solid var(--border);
+  touch-action: pan-y;
+}
+.learn-fact-row:last-child { border-bottom: none; }
+.learn-fact-q {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .88rem; color: var(--text); font-weight: 500;
+}
+.learn-fact-a {
+  font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700;
+  color: var(--accent-mid); letter-spacing: -.01em;
+}
+
+/* Learn card for description */
+.learn-desc-card {
+  margin: 12px 14px 0; padding: 14px 16px;
+  background: var(--accent-light); border: 1px solid var(--accent-border);
+  border-radius: var(--radius); font-size: .78rem; color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ════════════════════════════════════
+   TEST SCREEN
+════════════════════════════════════ */
+#sTest { overflow: hidden; }
+
+.test-topbar {
+  display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+  padding: calc(var(--safe-top) + 14px) 16px 14px;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+}
+.test-mode-label {
+  flex: 1;
+  font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700;
+  color: var(--text); letter-spacing: -.01em;
+}
+
+/* ────── Test: Setup Phase ────── */
+#testSetup {
+  flex: 1; min-height: 0; overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  touch-action: pan-y; padding: 14px 14px calc(var(--safe-bottom) + 100px);
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+/* Setup card */
+.setup-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-xs);
+}
+.setup-card-head {
+  padding: 10px 14px; background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .6rem; font-weight: 700; letter-spacing: .12em;
+  color: var(--muted); text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
+}
+.setup-card-body { padding: 14px; }
+
+/* Category toggles in setup */
+.cat-toggle {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; margin-bottom: 8px;
+}
+.cat-toggle:last-child { margin-bottom: 0; }
+.cat-toggle-header {
+  display: flex; align-items: center; gap: 10px; padding: 13px 14px;
+  cursor: pointer; touch-action: manipulation; transition: background .1s;
+}
+.cat-toggle-header:active { background: var(--bg2); }
+.cat-toggle-check {
+  width: 20px; height: 20px; border-radius: 6px;
+  border: 2px solid var(--border2); background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all .15s; font-size: .65rem; color: #fff;
+}
+.cat-toggle.selected .cat-toggle-check {
+  background: var(--accent-mid); border-color: var(--accent-mid);
+}
+.cat-toggle-name {
+  flex: 1; font-size: .88rem; font-weight: 600; color: var(--text);
+}
+.cat-toggle-meta { font-size: .68rem; color: var(--sub); font-family: 'IBM Plex Mono', monospace; }
+.cat-toggle-chevron {
+  font-size: .7rem; color: var(--sub);
+  transition: transform .2s; flex-shrink: 0;
+}
+.cat-toggle.open .cat-toggle-chevron { transform: rotate(90deg); }
+.cat-toggle-body {
+  display: none; padding: 0 14px 12px; background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+.cat-toggle.open .cat-toggle-body { display: block; }
+.sub-section-lbl {
+  font-family: 'IBM Plex Mono', monospace; font-size: .6rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--sub);
+  margin: 10px 0 6px; display: block;
+}
+.chips-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  padding: 7px 12px; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border); background: var(--surface);
+  color: var(--muted); font-size: .72rem; cursor: pointer;
+  font-weight: 600; font-family: 'IBM Plex Mono', monospace;
+  min-height: 36px; display: flex; align-items: center;
+  transition: all .1s; touch-action: manipulation;
+}
+.chip:active { transform: scale(.91); }
+.chip.on { border-color: var(--accent-mid); background: var(--accent-light); color: var(--accent-mid); }
+.sel-row { display: flex; gap: 6px; margin: 8px 0 6px; }
+.sel-btn {
+  flex: 1; padding: 7px; border-radius: var(--radius-sm);
+  font-size: .64rem; font-weight: 700;
+  font-family: 'IBM Plex Mono', monospace;
+  cursor: pointer; text-align: center; min-height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity .1s; touch-action: manipulation;
+}
+.sel-btn:active { opacity: .75; }
+.sel-btn.all { border: 1.5px solid var(--green-border); background: var(--green-light); color: var(--green); }
+.sel-btn.none { border: 1.5px solid var(--red-border); background: var(--red-light); color: var(--red); }
+
+/* Q count pills */
+.pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.count-pill {
+  padding: 9px 18px; border-radius: 99px;
+  border: 1.5px solid var(--border); background: var(--surface);
+  color: var(--muted); font-size: .78rem; font-weight: 600;
+  font-family: 'IBM Plex Mono', monospace; cursor: pointer;
+  min-height: 40px; display: flex; align-items: center;
+  transition: all .1s; touch-action: manipulation;
+}
+.count-pill:active { transform: scale(.93); }
+.count-pill.on { border-color: var(--accent-mid); background: var(--accent-light); color: var(--accent-mid); }
+
+/* Launch bar */
+.launch-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 12px 14px calc(var(--safe-bottom) + 12px);
+  background: var(--surface); border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 20px rgba(0,0,0,.06);
+}
+.launch-btn {
+  width: 100%; padding: 16px; border-radius: var(--radius-lg);
+  border: none; background: var(--accent); color: #fff;
+  font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 700;
+  cursor: pointer; touch-action: manipulation; letter-spacing: -.01em;
+  box-shadow: 0 3px 12px rgba(13,148,136,.3);
+  transition: transform .1s, opacity .1s, background .1s;
+}
+.launch-btn:active { transform: scale(.98); background: #0a7a70; }
+.launch-btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+/* ────── Test: Quiz Phase ────── */
+#testQuiz { display: none; flex-direction: column; flex: 1; min-height: 0; }
+#testQuiz.show { display: flex; }
+
+/* Progress bar */
+.quiz-progress-bar {
+  height: 3px; background: var(--border); flex-shrink: 0;
+}
+.quiz-progress-fill {
+  height: 100%; background: var(--accent-mid);
+  transition: width .3s ease; border-radius: 0 2px 2px 0;
+}
+
+/* Quiz header */
+.quiz-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; flex-shrink: 0;
+}
+.quiz-counter {
+  font-family: 'IBM Plex Mono', monospace; font-size: .72rem;
+  font-weight: 600; color: var(--muted);
+}
+.quiz-weak-badge {
+  font-family: 'IBM Plex Mono', monospace; font-size: .58rem;
+  font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 99px;
+  background: var(--amber-light); border: 1px solid var(--amber-border); color: var(--amber);
+}
+.quiz-score {
+  font-family: 'IBM Plex Mono', monospace; font-size: .72rem;
+  font-weight: 600; color: var(--muted);
+}
+
+/* Question card */
+.quiz-area {
+  flex: 1; min-height: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 12px 16px calc(var(--safe-bottom) + 16px); gap: 14px; overflow: hidden;
+}
+.question-card {
+  width: 100%; max-width: 420px;
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg); padding: 28px 20px 24px;
+  text-align: center; box-shadow: var(--shadow-sm); flex-shrink: 0;
+}
+.question-num {
+  font-family: 'IBM Plex Mono', monospace; font-size: .52rem;
+  font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--sub); margin-bottom: 12px;
+}
+.question-text {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.9rem, 8vw, 2.8rem);
+  font-weight: 800; color: var(--text);
+  letter-spacing: -.02em; line-height: 1.1;
+}
+
+/* Options */
+.options-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; width: 100%; max-width: 420px;
+}
+.option-btn {
+  min-height: 64px; border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border); background: var(--surface);
+  color: var(--text); font-family: 'Fraunces', serif;
+  font-size: clamp(1.05rem, 4vw, 1.4rem); font-weight: 700;
+  cursor: pointer; touch-action: manipulation;
+  transition: transform .08s, background .15s, border-color .15s, color .15s;
+  box-shadow: var(--shadow-xs);
+  display: flex; align-items: center; justify-content: center;
+  padding: 8px 10px; text-align: center;
+}
+.option-btn:active:not(:disabled) { transform: scale(.96); }
+.option-btn.correct {
+  background: var(--green-light); border-color: var(--green); color: var(--green);
+}
+.option-btn.wrong {
+  background: var(--red-light); border-color: var(--red); color: var(--red);
+}
+.option-btn.reveal {
+  background: var(--green-light); border-color: var(--green); color: var(--green); opacity: .6;
+}
+.option-btn:disabled { pointer-events: none; }
+
+
+
+/* ────── Test: Results Phase ────── */
+#testResults { display: none; flex-direction: column; flex: 1; min-height: 0; }
+#testResults.show { display: flex; }
+.results-scroll {
+  flex: 1; min-height: 0; overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  touch-action: pan-y; padding: 20px 14px calc(var(--safe-bottom) + 24px);
+  display: flex; flex-direction: column; gap: 12px; align-items: center;
+}
+.result-hero {
+  width: 100%; max-width: 420px; text-align: center; padding: 8px 0 4px;
+}
+.result-emoji { font-size: 2.8rem; display: block; margin-bottom: 10px; }
+.result-title {
+  font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 800;
+  color: var(--text); letter-spacing: -.02em; margin-bottom: 4px;
+}
+.result-sub { font-size: .8rem; color: var(--muted); }
+.result-stats-card {
+  width: 100%; max-width: 420px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  overflow: hidden; box-shadow: var(--shadow-sm);
+}
+.result-stats-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.result-stat {
+  padding: 16px; text-align: center;
+  border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.result-stat:nth-child(2n) { border-right: none; }
+.result-stat:nth-child(3),
+.result-stat:nth-child(4) { border-bottom: none; }
+.result-stat-val {
+  display: block; font-family: 'Fraunces', serif;
+  font-size: 1.6rem; font-weight: 800; color: var(--accent-mid);
+  letter-spacing: -.02em;
+}
+.result-stat-lbl {
+  display: block; font-size: .58rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--sub);
+  font-family: 'IBM Plex Mono', monospace; margin-top: 4px;
+}
+.result-actions {
+  width: 100%; max-width: 420px; display: flex; gap: 8px;
+}
+.result-btn {
+  flex: 1; padding: 15px; border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border); background: var(--surface);
+  color: var(--text); font-weight: 600; font-family: 'DM Sans', sans-serif;
+  font-size: .85rem; cursor: pointer; touch-action: manipulation;
+  transition: background .1s, transform .1s;
+}
+.result-btn:active { transform: scale(.97); background: var(--bg2); }
+.result-btn.pri {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+.result-btn.pri:active { background: #0a7a70; }
+
+/* Weak area card in results */
+.weak-result-card {
+  width: 100%; max-width: 420px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow-xs);
+}
+.weak-result-head {
+  padding: 10px 14px; background: var(--amber-light);
+  border-bottom: 1px solid var(--amber-border);
+  font-family: 'IBM Plex Mono', monospace; font-size: .6rem;
+  font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--amber);
+}
+.weak-result-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px; border-bottom: 1px solid var(--border);
+}
+.weak-result-row:last-child { border-bottom: none; }
+.weak-result-q {
+  flex: 1; font-family: 'IBM Plex Mono', monospace;
+  font-size: .82rem; color: var(--text);
+}
+.weak-result-a { font-family: 'Fraunces', serif; font-size: .95rem; font-weight: 700; color: var(--accent-mid); }
+.weak-result-status {
+  font-size: .58rem; font-weight: 700; font-family: 'IBM Plex Mono', monospace;
+  padding: 2px 6px; border-radius: 4px; flex-shrink: 0;
+}
+.weak-result-status.vweak { background: var(--red-light); color: var(--red); border: 1px solid var(--red-border); }
+.weak-result-status.weak  { background: var(--amber-light); color: var(--amber); border: 1px solid var(--amber-border); }
+
+/* ════════════════════════════════════
+   WEAK AREA SCREEN
+════════════════════════════════════ */
+#sWeak { overflow: hidden; }
+.weak-body {
+  flex: 1; min-height: 0; overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  touch-action: pan-y; background: var(--bg);
+  padding: 14px 14px calc(var(--safe-bottom) + 24px);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.weak-empty {
+  text-align: center; padding: 48px 24px;
+  font-size: .82rem; color: var(--sub); line-height: 1.8;
+}
+.weak-empty-icon { font-size: 2.4rem; display: block; margin-bottom: 12px; }
+.weak-empty-title {
+  font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 700;
+  color: var(--text); margin-bottom: 6px;
+}
+.weak-cat-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-xs);
+}
+.weak-cat-head {
+  padding: 10px 14px; background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  font-family: 'IBM Plex Mono', monospace; font-size: .6rem;
+  font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); display: flex; align-items: center; justify-content: space-between;
+}
+.weak-item-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-bottom: 1px solid var(--border);
+}
+.weak-item-row:last-child { border-bottom: none; }
+.weak-item-q { flex: 1; font-family: 'IBM Plex Mono', monospace; font-size: .85rem; color: var(--text); }
+.weak-item-a { font-family: 'Fraunces', serif; font-size: .95rem; font-weight: 700; color: var(--accent-mid); }
+.weak-item-badge {
+  font-size: .52rem; font-weight: 700; font-family: 'IBM Plex Mono', monospace;
+  padding: 3px 7px; border-radius: 5px; flex-shrink: 0;
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.badge-vweak { background: var(--red-light); color: var(--red); border: 1px solid var(--red-border); }
+.badge-weak  { background: var(--amber-light); color: var(--amber); border: 1px solid var(--amber-border); }
+.badge-ok    { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+
+/* Health bars */
+.weak-health-wrap {
+  width: 52px; height: 5px; background: var(--border);
+  border-radius: 3px; overflow: hidden; flex-shrink: 0;
+}
+.weak-health-fill { height: 100%; border-radius: 3px; transition: width .3s; }
+
+/* ════════════════════════════════════
+   MULT TABLE 2-COLUMN LAYOUT
+════════════════════════════════════ */
+.mult-table-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--border);
+}
+.mult-col {
+  display: flex; flex-direction: column;
+}
+.mult-col:first-child {
+  border-right: 1px solid var(--border);
+}
+.mult-fact-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px; border-bottom: 1px solid var(--border);
+  gap: 6px;
+}
+.mult-fact-row:last-child { border-bottom: none; }
+.mult-fact-q {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .78rem; color: var(--muted); font-weight: 500;
+}
+.mult-fact-a {
+  font-family: 'Fraunces', serif; font-size: .92rem; font-weight: 700;
+  color: var(--accent-mid);
+}
+
+/* ════════════════════════════════════
+   LEARN GRID LAYOUT (for non-mult)
+════════════════════════════════════ */
+.learn-grid-2col {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--border);
+}
+.learn-grid-cell {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 12px; border-bottom: 1px solid var(--border); gap: 6px;
+}
+.learn-grid-cell:nth-child(odd) { border-right: 1px solid var(--border); }
+.learn-grid-cell:last-child { border-bottom: none; }
+.learn-grid-cell:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+.learn-grid-q {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .78rem; color: var(--text); font-weight: 500;
+}
+.learn-grid-a {
+  font-family: 'Fraunces', serif; font-size: .92rem; font-weight: 700;
+  color: var(--accent-mid);
+}
+
+/* ════════════════════════════════════
+   TEST RESULT REVIEW LIST
+════════════════════════════════════ */
+.review-card {
+  width: 100%; max-width: 420px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow-xs);
+}
+.review-card-head {
+  padding: 10px 14px; background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  font-family: 'IBM Plex Mono', monospace; font-size: .6rem;
+  font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); display: flex; align-items: center; justify-content: space-between;
+}
+.review-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px; border-bottom: 1px solid var(--border);
+}
+.review-row:last-child { border-bottom: none; }
+.review-row.r-correct { background: var(--green-light); }
+.review-row.r-wrong   { background: var(--red-light); }
+.review-indicator {
+  width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .7rem; font-weight: 700; flex-shrink: 0;
+}
+.r-correct .review-indicator { background: var(--green); color: #fff; }
+.r-wrong   .review-indicator { background: var(--red);   color: #fff; }
+.review-q {
+  flex: 1; font-family: 'IBM Plex Mono', monospace;
+  font-size: .76rem; color: var(--text); min-width: 0;
+}
+.review-ans-wrap { display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0; gap: 1px; }
+.review-correct-ans {
+  font-family: 'Fraunces', serif; font-size: .88rem; font-weight: 700;
+  color: var(--green);
+}
+.review-user-ans {
+  font-family: 'IBM Plex Mono', monospace; font-size: .66rem;
+  color: var(--red); text-decoration: line-through;
+}
+
+/* ════════════════════════════════════
+   ANIMATIONS
+════════════════════════════════════ */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes scaleIn { from { transform: scale(.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.anim-fade { animation: fadeIn .22s ease-out forwards; }
+.anim-slide { animation: slideUp .22s ease-out forwards; }
+.anim-scale { animation: scaleIn .18s ease-out forwards; }
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HOME ══════════════ -->
+<div class="screen show" id="sHome">
+  <div class="home-inner">
+
+    <!-- Hero -->
+    <div class="home-hero">
+      <div class="logo-mark">
+        <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="6" r="3.2" fill="white"/>
+          <circle cx="6.5" cy="20.5" r="3.2" fill="white"/>
+          <circle cx="21.5" cy="20.5" r="3.2" fill="white"/>
+        </svg>
+      </div>
+      <div>
+        <div class="home-app-name">Basics</div>
+        <div class="home-tagline">Learn · Practise · Master</div>
+      </div>
+    </div>
+
+    <!-- Learn & Test -->
+    <div class="home-sec-lbl">Modes</div>
+    <div class="home-cards-row">
+      <button class="hcard accent" id="btnLearn">
+        <div class="hcard-icon">📖</div>
+        <div class="hcard-body">
+          <div class="hcard-title">Learn</div>
+          <div class="hcard-sub">Browse &amp; study all topics</div>
+        </div>
+      </button>
+      <button class="hcard teal" id="btnTest">
+        <div class="hcard-icon">✏️</div>
+        <div class="hcard-body">
+          <div class="hcard-title">Test</div>
+          <div class="hcard-sub">MCQ quiz with feedback</div>
+        </div>
+      </button>
+    </div>
+
+    <!-- Weak area -->
+    <div class="home-gap"></div>
+    <div class="home-sec-lbl">Review</div>
+    <button class="hcard full" id="btnWeak">
+      <div class="hcard-icon">⚠️</div>
+      <div class="hcard-body">
+        <div class="hcard-title">Weak Areas</div>
+        <div class="hcard-sub" id="homeWeakSub">Track questions you find difficult</div>
+      </div>
+      <span class="hcard-arrow">›</span>
+    </button>
+
+    <!-- Footer -->
+    <div class="home-bottom">
+      <button class="theme-toggle" id="btnTheme">☀️ Light</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ LEARN ══════════════ -->
+<div class="screen" id="sLearn">
+  <div class="learn-topbar">
+    <div class="learn-topbar-row1">
+      <button class="back-btn" id="learnBack">‹</button>
+      <div class="learn-title-grp">
+        <div class="learn-screen-title">Learn</div>
+        <div class="learn-screen-sub">Browse topics &amp; memorise</div>
+      </div>
+    </div>
+    <div class="learn-tabs" id="learnTabs"></div>
+  </div>
+  <div class="learn-body" id="learnBody"></div>
+</div>
+
+<!-- ══════════════ TEST ══════════════ -->
+<div class="screen" id="sTest">
+  <div class="test-topbar">
+    <button class="back-btn" id="testBack">‹</button>
+    <div class="test-mode-label" id="testModeLabel">Test</div>
+    <div id="testWeakBadge" style="display:none" class="quiz-weak-badge">WEAK</div>
+  </div>
+
+  <!-- Setup phase -->
+  <div id="testSetup" style="position:relative">
+    <!-- Weak area shortcut -->
+    <div class="setup-card" id="weakModeCard" style="display:none">
+      <div class="setup-card-head">⚠️ Weak Area Test</div>
+      <div class="setup-card-body" style="font-size:.82rem;color:var(--muted);line-height:1.7">
+        Test yourself on your weak questions only. Questions are drawn from your weak area list.
+        <br><br>
+        <span id="weakModeCount" style="font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--accent-mid);font-weight:600"></span>
+      </div>
+    </div>
+
+    <!-- Category selection -->
+    <div class="setup-card" id="normalModeCard">
+      <div class="setup-card-head">📂 Choose Topics</div>
+      <div class="setup-card-body" id="catToggles"></div>
+    </div>
+
+    <!-- Question count -->
+    <div class="setup-card" id="qCountCard">
+      <div class="setup-card-head">❓ Questions</div>
+      <div class="setup-card-body">
+        <div class="pill-row" id="qCountPills">
+          <button class="count-pill" data-v="10">10</button>
+          <button class="count-pill on" data-v="20">20</button>
+          <button class="count-pill" data-v="30">30</button>
+          <button class="count-pill" data-v="50">50</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Launch -->
+    <div class="launch-bar">
+      <button class="launch-btn" id="launchBtn" disabled>Select topics to begin</button>
+    </div>
+  </div>
+
+  <!-- Quiz phase -->
+  <div id="testQuiz">
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+    <div class="quiz-header">
+      <div class="quiz-counter" id="quizCounter">Q 1 / 20</div>
+      <div class="quiz-score" id="quizScoreDisp">0 ✓ 0 ✗</div>
+    </div>
+    <div class="quiz-area">
+      <div class="question-card">
+        <div class="question-num" id="questionNum">QUESTION 1</div>
+        <div class="question-text" id="questionText">Loading…</div>
+      </div>
+      <div class="options-grid" id="optionsGrid"></div>
+    </div>
+  </div>
+
+  <!-- Results phase -->
+  <div id="testResults">
+    <div class="results-scroll">
+      <div class="result-hero anim-slide">
+        <span class="result-emoji" id="resultEmoji">🎉</span>
+        <div class="result-title" id="resultTitle">Well done!</div>
+        <div class="result-sub" id="resultSub">Here's how you did</div>
+      </div>
+      <div class="result-stats-card anim-fade">
+        <div class="result-stats-grid">
+          <div class="result-stat"><span class="result-stat-val" id="rCorrect">-</span><span class="result-stat-lbl">Correct</span></div>
+          <div class="result-stat"><span class="result-stat-val" id="rWrong">-</span><span class="result-stat-lbl">Wrong</span></div>
+          <div class="result-stat"><span class="result-stat-val" id="rScore">-</span><span class="result-stat-lbl">Score</span></div>
+          <div class="result-stat"><span class="result-stat-val" id="rTotal">-</span><span class="result-stat-lbl">Total Qs</span></div>
+        </div>
+      </div>
+      <div class="result-actions anim-fade">
+        <button class="result-btn" id="resultHome">Home</button>
+        <button class="result-btn pri" id="resultRetry">Try Again</button>
+      </div>
+      <div class="weak-result-card anim-fade" id="weakResultCard" style="display:none">
+        <div class="weak-result-head">⚠️ Weak Areas Updated</div>
+        <div id="weakResultList"></div>
+      </div>
+      <div class="review-card anim-fade" id="reviewCard" style="display:none">
+        <div class="review-card-head">
+          <span>📋 Question Review</span>
+          <span id="reviewCardCount"></span>
+        </div>
+        <div id="reviewList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ WEAK AREAS ══════════════ -->
+<div class="screen" id="sWeak">
+  <div class="top-bar">
+    <button class="back-btn" id="weakBack">‹</button>
+    <div class="top-title">Weak Areas</div>
+    <button class="icon-btn" id="weakTestBtn" title="Test weak areas">✏️</button>
+  </div>
+  <div class="weak-body" id="weakBody"></div>
+</div>
+
+<script>
+'use strict';
+
+/* ════════════════════════════════════
+   DATA DEFINITIONS
+════════════════════════════════════ */
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=~~(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+const DATA = {
+  tables: {
+    label: 'Times Tables', icon: '×',
+    subs: (()=>{
+      const subs = {};
+      for(let n=2;n<=20;n++){
+        const key = 'mult'+n;
+        subs[key] = {
+          name: `× ${n} Table`,
+          tableNum: n,
+          isMult: true,
+          items: [n], // single item representing this table
+          display: ()=>`×${n}`,
+          rows: ()=>{const r=[];for(let i=1;i<=20;i++)r.push({q:`${i} × ${n}`,a:`${i*n}`});return r;},
+          question: ()=>{const m=~~(Math.random()*20)+1;return{q:`${m} × ${n} = ?`,a:`${m*n}`};},
+          wrongFor: a=>{const v=parseInt(a);return shuffle(Array.from({length:10},(_,i)=>v+i-5).filter(x=>x>0&&x!==v)).slice(0,3).map(String);}
+        };
+      }
+      return subs;
+    })()
+  },
+  powers: {
+    label: 'Powers & Roots', icon: '²',
+    subs: {
+      sq: {
+        name: 'Squares n²',
+        items: Array.from({length:30},(_,i)=>i+1),
+        display: n => `${n}²`,
+        rows: n => [{q:`${n}²`,a:`${n*n}`}],
+        question: n => ({q:`${n}² = ?`,a:`${n*n}`}),
+        wrongFor: a => {const n=parseInt(a);return shuffle([n-4,n-1,n+1,n+4,n+9,n-9].filter(x=>x>0)).slice(0,3).map(String);}
+      },
+      cu: {
+        name: 'Cubes n³',
+        items: Array.from({length:12},(_,i)=>i+1),
+        display: n => `${n}³`,
+        rows: n => [{q:`${n}³`,a:`${n**3}`}],
+        question: n => ({q:`${n}³ = ?`,a:`${n**3}`}),
+        wrongFor: a => {const n=parseInt(a);return shuffle([n-8,n-1,n+1,n+8,n+27,n-27].filter(x=>x>0)).slice(0,3).map(String);}
+      },
+      sqr: {
+        name: 'Square Roots √',
+        items: Array.from({length:20},(_,i)=>i+1),
+        display: n => `√${n*n}`,
+        rows: n => [{q:`√${n*n}`,a:`${n}`}],
+        question: n => ({q:`√${n*n} = ?`,a:`${n}`}),
+        wrongFor: a => {const n=parseInt(a);return shuffle([n-2,n-1,n+1,n+2,n+3].filter(x=>x>0)).slice(0,3).map(String);}
+      },
+      cbr: {
+        name: 'Cube Roots ∛',
+        items: Array.from({length:10},(_,i)=>i+1),
+        display: n => `∛${n**3}`,
+        rows: n => [{q:`∛${n**3}`,a:`${n}`}],
+        question: n => ({q:`∛${n**3} = ?`,a:`${n}`}),
+        wrongFor: a => {const n=parseInt(a);return shuffle([n-2,n-1,n+1,n+2,n+3].filter(x=>x>0)).slice(0,3).map(String);}
+      }
+    }
+  },
+  fractions: {
+    label: 'Fractions', icon: '⅓',
+    subs: {
+      f2p: {
+        name: 'Fraction → %',
+        items: [{a:'1/2',b:'50%'},{a:'1/3',b:'33⅓%'},{a:'2/3',b:'66⅔%'},{a:'1/4',b:'25%'},{a:'3/4',b:'75%'},{a:'1/5',b:'20%'},{a:'2/5',b:'40%'},{a:'3/5',b:'60%'},{a:'4/5',b:'80%'},{a:'1/8',b:'12.5%'},{a:'3/8',b:'37.5%'},{a:'5/8',b:'62.5%'},{a:'7/8',b:'87.5%'}],
+        display: i=>i.a, rows: i=>[{q:i.a,a:i.b}],
+        question: i=>({q:`${i.a} = ?%`,a:i.b}),
+        wrongFor: (_a,pool)=>shuffle(pool.map(i=>i.b).filter(b=>b!==_a)).slice(0,3)
+      },
+      f2d: {
+        name: 'Fraction → Decimal',
+        items: [{a:'1/4',b:'0.25'},{a:'1/2',b:'0.5'},{a:'3/4',b:'0.75'},{a:'1/5',b:'0.2'},{a:'2/5',b:'0.4'},{a:'3/5',b:'0.6'},{a:'4/5',b:'0.8'},{a:'1/8',b:'0.125'},{a:'3/8',b:'0.375'},{a:'5/8',b:'0.625'},{a:'7/8',b:'0.875'}],
+        display: i=>i.a, rows: i=>[{q:i.a,a:i.b}],
+        question: i=>({q:`${i.a} = ?`,a:i.b}),
+        wrongFor: (_a,pool)=>shuffle(pool.map(i=>i.b).filter(b=>b!==_a)).slice(0,3)
+      },
+      p2f: {
+        name: '% → Fraction',
+        items: [{a:'50%',b:'1/2'},{a:'25%',b:'1/4'},{a:'75%',b:'3/4'},{a:'20%',b:'1/5'},{a:'40%',b:'2/5'},{a:'60%',b:'3/5'},{a:'80%',b:'4/5'},{a:'33⅓%',b:'1/3'},{a:'66⅔%',b:'2/3'},{a:'12.5%',b:'1/8'},{a:'37.5%',b:'3/8'},{a:'62.5%',b:'5/8'},{a:'87.5%',b:'7/8'}],
+        display: i=>i.a, rows: i=>[{q:i.a,a:i.b}],
+        question: i=>({q:`${i.a} = ?`,a:i.b}),
+        wrongFor: (_a,pool)=>shuffle(pool.map(i=>i.b).filter(b=>b!==_a)).slice(0,3)
+      },
+      d2p: {
+        name: 'Decimal → %',
+        items: [{a:'0.5',b:'50%'},{a:'0.25',b:'25%'},{a:'0.75',b:'75%'},{a:'0.1',b:'10%'},{a:'0.2',b:'20%'},{a:'0.4',b:'40%'},{a:'0.6',b:'60%'},{a:'0.8',b:'80%'},{a:'0.125',b:'12.5%'},{a:'0.05',b:'5%'}],
+        display: i=>i.a, rows: i=>[{q:i.a,a:i.b}],
+        question: i=>({q:`${i.a} → %?`,a:i.b}),
+        wrongFor: (_a,pool)=>shuffle(pool.map(i=>i.b).filter(b=>b!==_a)).slice(0,3)
+      }
+    }
+  },
+  reference: {
+    label: 'Reference', icon: '⊞',
+    subs: {
+      factref: {
+        name: 'Factorials (n!)',
+        items: Array.from({length:10},(_,i)=>i+1),
+        display: n=>`${n}!`,
+        rows: n=>{const v=[1,2,6,24,120,720,5040,40320,362880,3628800];return[{q:`${n}!`,a:`${v[n-1]}`}];},
+        question: n=>{const v=[1,2,6,24,120,720,5040,40320,362880,3628800];return{q:`${n}! = ?`,a:`${v[n-1]}`};},
+        wrongFor: a=>{const n=parseInt(a);return shuffle([n*2,~~(n*1.5),~~(n*3),~~(n/2)].filter(x=>x>0&&x!==n)).slice(0,3).map(String);}
+      },
+      primeref: {
+        name: 'Prime Numbers (1–50)',
+        items: Array.from({length:50},(_,i)=>i+1),
+        display: n=>`${n}`,
+        rows: n=>{const p=new Set([2,3,5,7,11,13,17,19,23,29,31,37,41,43,47]);return[{q:`Is ${n} prime?`,a:p.has(n)?'Yes':'No'}];},
+        question: n=>{const p=new Set([2,3,5,7,11,13,17,19,23,29,31,37,41,43,47]);return{q:`Is ${n} prime?`,a:p.has(n)?'Yes':'No'};},
+        wrongFor: a=>a==='Yes'?['No']:['Yes']
+      },
+      diffsum: {
+        name: 'n³ ± n²',
+        items: [2,3,4,5,6,7,8,9,10],
+        display: n=>`${n}³±${n}²`,
+        rows: n=>[{q:`${n}³ − ${n}²`,a:`${n**3-n*n}`},{q:`${n}³ + ${n}²`,a:`${n**3+n*n}`}],
+        question: n=>{const d=Math.random()<.5;return d?{q:`${n}³ − ${n}² = ?`,a:`${n**3-n*n}`}:{q:`${n}³ + ${n}² = ?`,a:`${n**3+n*n}`};},
+        wrongFor: a=>{const n=parseInt(a);return shuffle([n-4,n-2,n+2,n+4,n+8,n-8].filter(x=>x>0&&x!==n)).slice(0,3).map(String);}
+      }
+    }
+  }
+};
+
+/* ════════════════════════════════════
+   STATE
+════════════════════════════════════ */
+let cfg = {dark:false};
+let weakData = {}; // {questionKey: {q, a, cat, subKey, attempts:[], wrong, correct}}
+
+function loadState(){
+  try { cfg = JSON.parse(localStorage.getItem('basics_cfg'))||{dark:false}; } catch(e){}
+  try { weakData = JSON.parse(localStorage.getItem('basics_weak'))||{}; } catch(e){}
+}
+function saveCfg(){ try{localStorage.setItem('basics_cfg',JSON.stringify(cfg));}catch(e){} }
+function saveWeak(){ try{localStorage.setItem('basics_weak',JSON.stringify(weakData));}catch(e){} }
+
+/* ════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════ */
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+
+/* ════════════════════════════════════
+   THEME
+════════════════════════════════════ */
+function applyTheme(){
+  document.body.classList.toggle('dark', cfg.dark);
+  document.getElementById('btnTheme').textContent = cfg.dark ? '☀️ Light' : '🌙 Dark';
+}
+
+/* ════════════════════════════════════
+   WEAK AREA LOGIC
+════════════════════════════════════ */
+function getWeakKey(catKey, subKey, item){
+  return catKey+'|'+subKey+'|'+(typeof item==='object'?JSON.stringify(item):item);
+}
+
+function recordAttempt(catKey, subKey, item, q, a, correct){
+  const k = getWeakKey(catKey, subKey, item);
+  if(!weakData[k]) weakData[k] = {q, a, cat:catKey, subKey, item, attempts:[], wrong:0, correct:0};
+  const entry = weakData[k];
+  entry.q = q; entry.a = a;
+  entry.attempts.push(correct?1:0);
+  if(entry.attempts.length > 3) entry.attempts.shift();
+  // Recount totals
+  entry.wrong = entry.attempts.filter(x=>x===0).length;
+  entry.correct = entry.attempts.filter(x=>x===1).length;
+  // Remove if last 3 all correct
+  if(entry.attempts.length===3 && entry.attempts.every(x=>x===1)){
+    delete weakData[k];
+  }
+  saveWeak();
+}
+
+function getWeakStatus(entry){
+  const w = entry.wrong;
+  if(w===3) return 'vweak';
+  if(w>=2)  return 'weak';
+  if(w===1) return 'ok';
+  return 'good';
+}
+
+function isInWeakArea(entry){
+  return entry && entry.wrong >= 2;
+}
+
+function getAllWeakEntries(){
+  return Object.values(weakData).filter(e => isInWeakArea(e));
+}
+
+function updateHomeWeakSub(){
+  const count = getAllWeakEntries().length;
+  const el = document.getElementById('homeWeakSub');
+  if(count===0) el.textContent = 'No weak areas — great work!';
+  else el.textContent = `${count} question${count!==1?'s':''} need${count===1?'s':''} attention`;
+}
+
+/* ════════════════════════════════════
+   LEARN SCREEN
+════════════════════════════════════ */
+const learnCats = Object.keys(DATA);
+let activeLearnCat = learnCats[0];
+
+function buildLearnTabs(){
+  const tabs = document.getElementById('learnTabs');
+  tabs.innerHTML = '';
+  learnCats.forEach(catKey => {
+    const t = document.createElement('button');
+    t.className = 'learn-tab' + (catKey===activeLearnCat?' active':'');
+    t.textContent = DATA[catKey].label;
+    t.addEventListener('click', ()=>{ activeLearnCat=catKey; buildLearnTabs(); renderLearn(); });
+    tabs.appendChild(t);
+  });
+}
+
+function renderLearn(){
+  const body = document.getElementById('learnBody');
+  body.innerHTML = '';
+  const cat = DATA[activeLearnCat];
+  if(!cat) return;
+
+  // Desc card
+  const desc = document.createElement('div');
+  desc.className = 'learn-desc-card';
+  desc.textContent = getLearnDesc(activeLearnCat);
+  body.appendChild(desc);
+
+  Object.entries(cat.subs).forEach(([subKey, sub]) => {
+    const sec = document.createElement('div');
+    sec.className = 'toggle-section';
+
+    const isMult = !!sub.isMult;
+    const totalRows = isMult ? 20 : sub.items.reduce((acc,i)=>acc+sub.rows(i).length,0);
+
+    sec.innerHTML = `
+      <div class="toggle-header">
+        <span class="toggle-icon">${getSubIcon(activeLearnCat, subKey)}</span>
+        <span class="toggle-label">${sub.name}</span>
+        <span class="toggle-count">${totalRows} facts</span>
+        <span class="toggle-chevron">›</span>
+      </div>
+      <div class="toggle-body"></div>
+    `;
+
+    const header = sec.querySelector('.toggle-header');
+    const tbody = sec.querySelector('.toggle-body');
+
+    header.addEventListener('click', ()=>{
+      const isOpen = sec.classList.contains('open');
+      if(!isOpen && !tbody.childElementCount){
+        if(isMult){
+          // 2-column multiplication layout
+          const n = sub.tableNum;
+          const grid = document.createElement('div');
+          grid.className = 'mult-table-grid';
+          const col1 = document.createElement('div'); col1.className = 'mult-col';
+          const col2 = document.createElement('div'); col2.className = 'mult-col';
+          for(let i=1;i<=10;i++){
+            const r = document.createElement('div'); r.className='mult-fact-row';
+            r.innerHTML=`<span class="mult-fact-q">${i} × ${n}</span><span class="mult-fact-a">${i*n}</span>`;
+            col1.appendChild(r);
+          }
+          for(let i=11;i<=20;i++){
+            const r = document.createElement('div'); r.className='mult-fact-row';
+            r.innerHTML=`<span class="mult-fact-q">${i} × ${n}</span><span class="mult-fact-a">${i*n}</span>`;
+            col2.appendChild(r);
+          }
+          grid.appendChild(col1); grid.appendChild(col2);
+          tbody.appendChild(grid);
+        } else {
+          // 2-column grid for all other content
+          const allRows = [];
+          sub.items.forEach(item => {
+            sub.rows(item).forEach(row => allRows.push(row));
+          });
+          const grid = document.createElement('div');
+          grid.className = 'learn-grid-2col';
+          allRows.forEach(row => {
+            const cell = document.createElement('div');
+            cell.className = 'learn-grid-cell';
+            cell.innerHTML = `<span class="learn-grid-q">${row.q}</span><span class="learn-grid-a">${row.a}</span>`;
+            grid.appendChild(cell);
+          });
+          // If odd number, pad last cell so grid doesn't break
+          if(allRows.length % 2 !== 0){
+            const pad = document.createElement('div');
+            pad.className = 'learn-grid-cell';
+            pad.style.border='none';
+            grid.appendChild(pad);
+          }
+          tbody.appendChild(grid);
+        }
+      }
+      sec.classList.toggle('open', !isOpen);
+    });
+
+    body.appendChild(sec);
+  });
+
+  // padding at end
+  const pad = document.createElement('div'); pad.style.height='24px'; body.appendChild(pad);
+}
+
+function getLearnDesc(catKey){
+  const descs = {
+    tables: 'Multiplication tables from 2 to 20. Tap any section to expand and see all facts.',
+    powers: 'Squares, cubes, and their roots. Essential for fast mental arithmetic.',
+    fractions: 'Convert between fractions, decimals and percentages. Critical for everyday numeracy.',
+    reference: 'Factorials, prime numbers, and power combinations for advanced practice.'
+  };
+  return descs[catKey] || '';
+}
+
+function getSubIcon(catKey, subKey){
+  if(subKey.startsWith('mult')) return '×';
+  const icons = { sq:'²', cu:'³', sqr:'√', cbr:'∛', f2p:'→', f2d:'→', p2f:'←', d2p:'%', factref:'!', primeref:'ℙ', diffsum:'±' };
+  return icons[subKey] || '·';
+}
+
+/* ════════════════════════════════════
+   TEST SETUP
+════════════════════════════════════ */
+let setupItems = [];     // [{catKey, subKey, item, k}]
+let testQCount = 20;
+let isWeakTest = false;
+
+function buildTestSetup(weakMode){
+  isWeakTest = !!weakMode;
+  const weakCard = document.getElementById('weakModeCard');
+  const normalCard = document.getElementById('normalModeCard');
+  const qCountCard = document.getElementById('qCountCard');
+  const modeLabel = document.getElementById('testModeLabel');
+  const weakBadge = document.getElementById('testWeakBadge');
+
+  if(weakMode){
+    weakCard.style.display = '';
+    normalCard.style.display = 'none';
+    qCountCard.style.display = 'none';
+    modeLabel.textContent = 'Weak Area Test';
+    weakBadge.style.display = '';
+    const entries = getAllWeakEntries();
+    document.getElementById('weakModeCount').textContent = `${entries.length} weak question${entries.length!==1?'s':''} found`;
+    document.getElementById('launchBtn').disabled = entries.length === 0;
+    document.getElementById('launchBtn').textContent = entries.length > 0 ? 'Start Weak Area Test' : 'No weak areas yet';
+  } else {
+    weakCard.style.display = 'none';
+    normalCard.style.display = '';
+    qCountCard.style.display = '';
+    modeLabel.textContent = 'Test';
+    weakBadge.style.display = 'none';
+    renderCatToggles();
+    updateLaunchBtn();
+  }
+}
+
+function renderCatToggles(){
+  const wrap = document.getElementById('catToggles');
+  wrap.innerHTML = '';
+  Object.entries(DATA).forEach(([catKey, catData]) => {
+    const card = document.createElement('div');
+    card.className = 'cat-toggle';
+    card.innerHTML = `
+      <div class="cat-toggle-header">
+        <div class="cat-toggle-check">✓</div>
+        <div class="cat-toggle-name">${catData.icon} ${catData.label}</div>
+        <div class="cat-toggle-meta" id="meta-${catKey}">0 selected</div>
+        <span class="cat-toggle-chevron">›</span>
+      </div>
+      <div class="cat-toggle-body" id="body-${catKey}"></div>
+    `;
+
+    const hdr = card.querySelector('.cat-toggle-header');
+    const chk = card.querySelector('.cat-toggle-check');
+    const ctbody = card.querySelector('.cat-toggle-body');
+
+    if(catKey === 'tables'){
+      // Special handling: group all mult subs under one chips section
+      const lbl = document.createElement('span');
+      lbl.className = 'sub-section-lbl'; lbl.textContent = 'Select Tables';
+      ctbody.appendChild(lbl);
+
+      const selRow = document.createElement('div');
+      selRow.className = 'sel-row';
+      const btnAll = document.createElement('button'); btnAll.className='sel-btn all'; btnAll.textContent='✓ All';
+      const btnNone = document.createElement('button'); btnNone.className='sel-btn none'; btnNone.textContent='✕ None';
+      selRow.appendChild(btnAll); selRow.appendChild(btnNone);
+      ctbody.appendChild(selRow);
+
+      const chipsWrap = document.createElement('div');
+      chipsWrap.className = 'chips-wrap';
+      ctbody.appendChild(chipsWrap);
+
+      Object.entries(catData.subs).forEach(([subKey, sub]) => {
+        const item = sub.items[0]; // single item per mult sub
+        const k = getWeakKey(catKey, subKey, item);
+        const chip = document.createElement('button');
+        chip.className = 'chip' + (setupItems.find(x=>x.k===k)?' on':'');
+        chip.textContent = `×${sub.tableNum}`;
+        chip.dataset.k = k;
+        chip.addEventListener('click', ()=>{
+          const idx = setupItems.findIndex(x=>x.k===k);
+          if(idx>-1){ setupItems.splice(idx,1); chip.classList.remove('on'); }
+          else { setupItems.push({catKey,subKey,item,k}); chip.classList.add('on'); }
+          updateCatMeta(catKey); updateLaunchBtn();
+        });
+        chipsWrap.appendChild(chip);
+      });
+
+      btnAll.addEventListener('click', ()=>{
+        Object.entries(catData.subs).forEach(([subKey,sub])=>{
+          const item=sub.items[0]; const k=getWeakKey(catKey,subKey,item);
+          if(!setupItems.find(x=>x.k===k)) setupItems.push({catKey,subKey,item,k});
+        });
+        chipsWrap.querySelectorAll('.chip').forEach(c=>c.classList.add('on'));
+        updateCatMeta(catKey); updateLaunchBtn();
+      });
+      btnNone.addEventListener('click', ()=>{
+        Object.entries(catData.subs).forEach(([subKey,sub])=>{
+          const item=sub.items[0]; const k=getWeakKey(catKey,subKey,item);
+          setupItems = setupItems.filter(x=>x.k!==k);
+        });
+        chipsWrap.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+        updateCatMeta(catKey); updateLaunchBtn();
+      });
+
+    } else {
+      // Normal handling for non-mult categories
+      Object.entries(catData.subs).forEach(([subKey, sub]) => {
+        const lbl = document.createElement('span');
+        lbl.className = 'sub-section-lbl'; lbl.textContent = sub.name;
+        ctbody.appendChild(lbl);
+
+        const selRow = document.createElement('div');
+        selRow.className = 'sel-row';
+        const btnAll = document.createElement('button'); btnAll.className='sel-btn all'; btnAll.textContent='✓ All';
+        const btnNone = document.createElement('button'); btnNone.className='sel-btn none'; btnNone.textContent='✕ None';
+        selRow.appendChild(btnAll); selRow.appendChild(btnNone);
+        ctbody.appendChild(selRow);
+
+        const chipsWrap = document.createElement('div');
+        chipsWrap.className = 'chips-wrap';
+        ctbody.appendChild(chipsWrap);
+
+        sub.items.forEach(item => {
+          const k = getWeakKey(catKey, subKey, item);
+          const chip = document.createElement('button');
+          chip.className = 'chip' + (setupItems.find(x=>x.k===k)?' on':'');
+          chip.textContent = sub.display(item);
+          chip.dataset.k = k;
+          chip.addEventListener('click', ()=>{
+            const idx = setupItems.findIndex(x=>x.k===k);
+            if(idx>-1){ setupItems.splice(idx,1); chip.classList.remove('on'); }
+            else { setupItems.push({catKey,subKey,item,k}); chip.classList.add('on'); }
+            updateCatMeta(catKey); updateLaunchBtn();
+          });
+          chipsWrap.appendChild(chip);
+        });
+
+        btnAll.addEventListener('click', ()=>{
+          sub.items.forEach(item=>{
+            const k=getWeakKey(catKey,subKey,item);
+            if(!setupItems.find(x=>x.k===k)) setupItems.push({catKey,subKey,item,k});
+          });
+          chipsWrap.querySelectorAll('.chip').forEach(c=>c.classList.add('on'));
+          updateCatMeta(catKey); updateLaunchBtn();
+        });
+        btnNone.addEventListener('click', ()=>{
+          sub.items.forEach(item=>{ const k=getWeakKey(catKey,subKey,item); setupItems=setupItems.filter(x=>x.k!==k); });
+          chipsWrap.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+          updateCatMeta(catKey); updateLaunchBtn();
+        });
+      });
+    }
+
+    // Toggle expand
+    hdr.addEventListener('click', ()=>{
+      card.classList.toggle('open');
+    });
+
+    // Check mark toggles all in category
+    chk.addEventListener('click', e=>{
+      e.stopPropagation();
+      const allSelected = isCatFullySelected(catKey);
+      if(catKey === 'tables'){
+        Object.entries(catData.subs).forEach(([subKey,sub])=>{
+          const item=sub.items[0]; const k=getWeakKey(catKey,subKey,item);
+          if(allSelected){ setupItems=setupItems.filter(x=>x.k!==k); }
+          else if(!setupItems.find(x=>x.k===k)){ setupItems.push({catKey,subKey,item,k}); }
+        });
+      } else {
+        Object.entries(catData.subs).forEach(([subKey, sub])=>{
+          sub.items.forEach(item=>{
+            const k=getWeakKey(catKey,subKey,item);
+            if(allSelected){ setupItems=setupItems.filter(x=>x.k!==k); }
+            else if(!setupItems.find(x=>x.k===k)){ setupItems.push({catKey,subKey,item,k}); }
+          });
+        });
+      }
+      ctbody.querySelectorAll('.chip').forEach(chip=>{
+        chip.classList.toggle('on', !allSelected);
+      });
+      updateCatMeta(catKey); updateLaunchBtn();
+    });
+
+    wrap.appendChild(card);
+    updateCatMeta(catKey);
+  });
+}
+
+function isCatFullySelected(catKey){
+  const cat = DATA[catKey];
+  if(catKey === 'tables'){
+    return Object.entries(cat.subs).every(([sk,sub])=>{
+      const item = sub.items[0];
+      return setupItems.find(x=>x.k===getWeakKey(catKey,sk,item));
+    });
+  }
+  return Object.entries(cat.subs).every(([sk,sub])=>
+    sub.items.every(item => setupItems.find(x=>x.k===getWeakKey(catKey,sk,item)))
+  );
+}
+
+function updateCatMeta(catKey){
+  const cat = DATA[catKey];
+  let count = 0;
+  if(catKey === 'tables'){
+    Object.entries(cat.subs).forEach(([sk,sub])=>{
+      const item = sub.items[0];
+      if(setupItems.find(x=>x.k===getWeakKey(catKey,sk,item))) count++;
+    });
+  } else {
+    Object.entries(cat.subs).forEach(([sk,sub])=>{
+      sub.items.forEach(item=>{ if(setupItems.find(x=>x.k===getWeakKey(catKey,sk,item))) count++; });
+    });
+  }
+  const el = document.getElementById('meta-'+catKey);
+  if(el) el.textContent = count===0 ? 'none selected' : `${count} selected`;
+  const card = el ? el.closest('.cat-toggle') : null;
+  if(card) card.classList.toggle('selected', count>0);
+}
+
+function updateLaunchBtn(){
+  const btn = document.getElementById('launchBtn');
+  if(isWeakTest) return;
+  if(setupItems.length===0){
+    btn.disabled = true;
+    btn.textContent = 'Select topics to begin';
+  } else {
+    btn.disabled = false;
+    btn.textContent = `Start Test · ${setupItems.length} topic${setupItems.length!==1?'s':''}`;
+  }
+}
+
+// Q count pills
+document.querySelectorAll('#qCountPills .count-pill').forEach(p=>{
+  p.addEventListener('click',()=>{
+    document.querySelectorAll('#qCountPills .count-pill').forEach(x=>x.classList.remove('on'));
+    p.classList.add('on');
+    testQCount = +p.dataset.v;
+  });
+});
+
+/* ════════════════════════════════════
+   QUIZ ENGINE
+════════════════════════════════════ */
+let Q = null; // quiz state
+
+function buildQuizQuestions(){
+  if(isWeakTest){
+    const entries = getAllWeakEntries();
+    const qs = [];
+    entries.forEach(e => {
+      const catKey = e.cat; const subKey = e.subKey; const item = e.item;
+      const sub = DATA[catKey]?.subs[subKey];
+      if(!sub) return;
+      const qObj = sub.question(item);
+      const pool = sub.items;
+      const wrongs = sub.wrongFor(qObj.a, pool);
+      const options = shuffle([qObj.a, ...wrongs]);
+      qs.push({q:qObj.q, a:qObj.a, options, catKey, subKey, item});
+    });
+    return shuffle(qs);
+  }
+
+  const pool = [];
+  setupItems.forEach(({catKey,subKey,item}) => {
+    const sub = DATA[catKey]?.subs[subKey];
+    if(!sub) return;
+    pool.push({catKey,subKey,item,sub});
+  });
+
+  const count = Math.min(testQCount, Math.max(pool.length, 1) * 5);
+  const qs = [];
+  for(let i=0;i<count;i++){
+    const entry = pool[i % pool.length];
+    const {catKey,subKey,item,sub} = entry;
+    const qObj = sub.question(item);
+    const wrongs = sub.wrongFor(qObj.a, sub.items);
+    const options = shuffle([qObj.a, ...wrongs]);
+    qs.push({q:qObj.q, a:qObj.a, options, catKey, subKey, item});
+  }
+  return shuffle(qs);
+}
+
+function startQuiz(){
+  const questions = buildQuizQuestions();
+  if(!questions.length){ alert('No questions available.'); return; }
+
+  Q = { questions, idx:0, correct:0, wrong:0, answers:[] };
+
+  document.getElementById('testSetup').style.display = 'none';
+  const quiz = document.getElementById('testQuiz');
+  const results = document.getElementById('testResults');
+  quiz.classList.add('show'); quiz.style.display = 'none';
+  quiz.style.display = '';
+  results.classList.remove('show'); results.style.display = 'none';
+
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const {questions, idx} = Q;
+  const total = questions.length;
+  const qData = questions[idx];
+
+  // Progress
+  document.getElementById('quizProgressFill').style.width = `${(idx/total)*100}%`;
+  document.getElementById('quizCounter').textContent = `Q ${idx+1} / ${total}`;
+  document.getElementById('quizScoreDisp').textContent = `${Q.correct} ✓ ${Q.wrong} ✗`;
+  document.getElementById('questionNum').textContent = `QUESTION ${idx+1}`;
+  document.getElementById('questionText').textContent = qData.q;
+
+  // Options
+  const grid = document.getElementById('optionsGrid');
+  grid.innerHTML = '';
+  qData.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn anim-scale';
+    btn.textContent = opt;
+    btn.addEventListener('click', ()=>handleAnswer(opt, qData));
+    grid.appendChild(btn);
+  });
+}
+
+function handleAnswer(chosen, qData){
+  const correct = chosen === qData.a;
+  if(correct) Q.correct++; else Q.wrong++;
+
+  // Store answer for review
+  Q.answers.push({ q: qData.q, correct: qData.a, chosen, isCorrect: correct });
+
+  // Record in weak system
+  recordAttempt(qData.catKey, qData.subKey, qData.item, qData.q, qData.a, correct);
+
+  // Instantly advance — no feedback shown
+  Q.idx++;
+  if(Q.idx >= Q.questions.length) showResults();
+  else renderQuestion();
+}
+
+function showResults(){
+  const quiz = document.getElementById('testQuiz');
+  const results = document.getElementById('testResults');
+  quiz.classList.remove('show'); quiz.style.display = 'none';
+  results.classList.add('show'); results.style.display = '';
+
+  const total = Q.questions.length;
+  const pct = Math.round((Q.correct/total)*100);
+
+  // Emoji & title
+  let emoji = '🎉', title = 'Excellent!';
+  if(pct < 40){ emoji='😅'; title='Keep going!'; }
+  else if(pct < 60){ emoji='🙌'; title='Good effort!'; }
+  else if(pct < 80){ emoji='👍'; title='Well done!'; }
+  else if(pct < 100){ emoji='🌟'; title='Great work!'; }
+
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultSub').textContent = `${pct}% accuracy across ${total} questions`;
+  document.getElementById('rCorrect').textContent = Q.correct;
+  document.getElementById('rWrong').textContent = Q.wrong;
+  document.getElementById('rScore').textContent = pct+'%';
+  document.getElementById('rTotal').textContent = total;
+
+  // Weak summary
+  const weakEntries = getAllWeakEntries();
+  const weakCard = document.getElementById('weakResultCard');
+  const weakList = document.getElementById('weakResultList');
+  weakList.innerHTML = '';
+  if(weakEntries.length > 0){
+    weakCard.style.display = '';
+    weakEntries.slice(0,8).forEach(e => {
+      const status = getWeakStatus(e);
+      const row = document.createElement('div');
+      row.className = 'weak-result-row';
+      row.innerHTML = `
+        <span class="weak-result-q">${e.q.replace(/\s*=\s*\?.*$/,'').trim()}</span>
+        <span class="weak-result-a">${e.a}</span>
+        <span class="weak-result-status ${status==='vweak'?'vweak':'weak'}">${status==='vweak'?'Very Weak':'Weak'}</span>
+      `;
+      weakList.appendChild(row);
+    });
+    if(weakEntries.length > 8){
+      const more = document.createElement('div');
+      more.style.cssText='padding:10px 14px;font-size:.7rem;color:var(--sub);font-family:IBM Plex Mono,monospace;';
+      more.textContent = `+${weakEntries.length-8} more in Weak Areas`;
+      weakList.appendChild(more);
+    }
+  } else {
+    weakCard.style.display = 'none';
+  }
+
+  // Detailed review list
+  const reviewCard = document.getElementById('reviewCard');
+  const reviewList = document.getElementById('reviewList');
+  const reviewCount = document.getElementById('reviewCardCount');
+  reviewList.innerHTML = '';
+  if(Q.answers && Q.answers.length > 0){
+    reviewCard.style.display = '';
+    const wrongCount = Q.answers.filter(a=>!a.isCorrect).length;
+    reviewCount.textContent = `${Q.correct} ✓ · ${wrongCount} ✗`;
+    Q.answers.forEach(ans => {
+      const row = document.createElement('div');
+      row.className = 'review-row ' + (ans.isCorrect ? 'r-correct' : 'r-wrong');
+      const qLabel = ans.q.replace(/\s*=\s*\?.*$/,'').trim();
+      row.innerHTML = `
+        <span class="review-indicator">${ans.isCorrect?'✓':'✗'}</span>
+        <span class="review-q">${qLabel}</span>
+        <span class="review-ans-wrap">
+          <span class="review-correct-ans">${ans.correct}</span>
+          ${!ans.isCorrect ? `<span class="review-user-ans">${ans.chosen}</span>` : ''}
+        </span>
+      `;
+      reviewList.appendChild(row);
+    });
+  } else {
+    reviewCard.style.display = 'none';
+  }
+
+  updateHomeWeakSub();
+}
+
+/* ════════════════════════════════════
+   WEAK SCREEN
+════════════════════════════════════ */
+function renderWeakScreen(){
+  const body = document.getElementById('weakBody');
+  body.innerHTML = '';
+  const entries = getAllWeakEntries();
+
+  if(entries.length === 0){
+    const empty = document.createElement('div');
+    empty.className = 'weak-empty';
+    empty.innerHTML = `<span class="weak-empty-icon">🎯</span><div class="weak-empty-title">No weak areas!</div>Take some tests and any questions you find difficult will appear here.`;
+    body.appendChild(empty);
+    return;
+  }
+
+  // Group by cat
+  const byCat = {};
+  entries.forEach(e=>{
+    if(!byCat[e.cat]) byCat[e.cat]=[];
+    byCat[e.cat].push(e);
+  });
+
+  Object.entries(byCat).forEach(([catKey, catEntries])=>{
+    const card = document.createElement('div');
+    card.className = 'weak-cat-card';
+    card.innerHTML = `<div class="weak-cat-head"><span>${DATA[catKey]?.label||catKey}</span><span style="font-weight:400;opacity:.7">${catEntries.length} question${catEntries.length!==1?'s':''}</span></div>`;
+
+    catEntries.sort((a,b)=>b.wrong-a.wrong).forEach(e=>{
+      const status = getWeakStatus(e);
+      const health = Math.round((e.correct/(e.attempts.length||1))*100);
+      const barColor = health>=70?'var(--green)':health>=40?'var(--amber)':'var(--red)';
+
+      const row = document.createElement('div');
+      row.className = 'weak-item-row';
+      row.innerHTML = `
+        <span class="weak-item-q">${e.q.replace(/\s*=\s*\?.*$/,'').trim()}</span>
+        <span class="weak-item-a">${e.a}</span>
+        <span class="weak-item-badge ${status==='vweak'?'badge-vweak':'badge-weak'}">${status==='vweak'?'Very Weak':'Weak'}</span>
+        <div class="weak-health-wrap"><div class="weak-health-fill" style="width:${health}%;background:${barColor}"></div></div>
+      `;
+      card.appendChild(row);
+    });
+
+    body.appendChild(card);
+  });
+
+  // Legend
+  const legend = document.createElement('div');
+  legend.style.cssText='padding:8px 4px;font-size:.66rem;color:var(--sub);font-family:IBM Plex Mono,monospace;line-height:2;text-align:center';
+  legend.innerHTML='<span style="color:var(--green)">■</span> ≥70% good &nbsp; <span style="color:var(--amber)">■</span> 40–69% needs work &nbsp; <span style="color:var(--red)">■</span> &lt;40% focus here';
+  body.appendChild(legend);
+}
+
+/* ════════════════════════════════════
+   BUTTON BINDINGS
+════════════════════════════════════ */
+function bindAll(){
+  // Home
+  document.getElementById('btnLearn').addEventListener('click', ()=>{
+    buildLearnTabs(); renderLearn(); go('sLearn');
+  });
+  document.getElementById('btnTest').addEventListener('click', ()=>{
+    setupItems = []; buildTestSetup(false); go('sTest');
+  });
+  document.getElementById('btnWeak').addEventListener('click', ()=>{
+    renderWeakScreen(); go('sWeak');
+  });
+  document.getElementById('btnTheme').addEventListener('click', ()=>{
+    cfg.dark = !cfg.dark; saveCfg(); applyTheme();
+  });
+
+  // Learn
+  document.getElementById('learnBack').addEventListener('click', ()=>go('sHome'));
+
+  // Test back
+  document.getElementById('testBack').addEventListener('click', ()=>{
+    // Reset UI
+    document.getElementById('testSetup').style.display = '';
+    document.getElementById('testQuiz').classList.remove('show');
+    document.getElementById('testQuiz').style.display = 'none';
+    document.getElementById('testResults').classList.remove('show');
+    document.getElementById('testResults').style.display = 'none';
+    go('sHome');
+  });
+
+  // Launch
+  document.getElementById('launchBtn').addEventListener('click', startQuiz);
+
+  // Results
+  document.getElementById('resultHome').addEventListener('click', ()=>{
+    document.getElementById('testSetup').style.display = '';
+    document.getElementById('testQuiz').classList.remove('show');
+    document.getElementById('testQuiz').style.display = 'none';
+    document.getElementById('testResults').classList.remove('show');
+    document.getElementById('testResults').style.display = 'none';
+    go('sHome');
+  });
+  document.getElementById('resultRetry').addEventListener('click', ()=>{
+    document.getElementById('testResults').classList.remove('show');
+    document.getElementById('testResults').style.display = 'none';
+    document.getElementById('testSetup').style.display = '';
+    if(!isWeakTest) updateLaunchBtn();
+  });
+
+  // Weak screen
+  document.getElementById('weakBack').addEventListener('click', ()=>{ updateHomeWeakSub(); go('sHome'); });
+  document.getElementById('weakTestBtn').addEventListener('click', ()=>{
+    buildTestSetup(true); go('sTest');
+  });
+}
+
+/* ════════════════════════════════════
+   INIT
+════════════════════════════════════ */
+window.addEventListener('load', ()=>{
+  loadState();
+  applyTheme();
+  updateHomeWeakSub();
+  bindAll();
+
+  // Fade in home
+  const home = document.getElementById('sHome');
+  home.style.opacity = '0';
+  home.style.transition = 'opacity .3s';
+  requestAnimationFrame(()=>{ home.style.opacity = '1'; });
+});
+</script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(r => console.log('[SW] Registered, scope:', r.scope))
+        .catch(e => console.warn('[SW] Registration failed:', e));
+    });
+  }
+</script>
+</body>
+</html>
