@@ -1755,7 +1755,7 @@ function buildQuizQuestions(){
     pool.push({catKey,subKey,item,sub});
   });
 
-  const count = Math.min(testQCount, Math.max(pool.length, 1) * 5);
+  const count = testQCount;
   const qs = [];
   for(let i=0;i<count;i++){
     const entry = pool[i % pool.length];
