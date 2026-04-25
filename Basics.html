@@ -626,16 +626,15 @@ body.dark {
 #testResults { display: none; flex-direction: column; }
 #testResults.show { display: flex; flex-direction: column; }
 .results-scroll {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  flex: 1; min-height: 0;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y;
-  padding: 20px 14px calc(var(--safe-bottom) + 24px);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: center;
+  overscroll-behavior: contain;
+  padding: 20px 14px calc(var(--safe-bottom) + 60px);
+  display: flex; flex-direction: column;
+  gap: 12px; align-items: center;
+  width: 100%;
 }
 .result-hero {
   width: 100%; max-width: 420px; text-align: center; padding: 8px 0 4px;
@@ -719,6 +718,7 @@ body.dark {
 /* ════════════════════════════════════
    WEAK AREA SCREEN
 ════════════════════════════════════ */
+#sResults { overflow: hidden; }
 #sWeak { overflow: hidden; }
 .weak-body {
   flex: 1; min-height: 0; overflow-y: scroll;
@@ -1078,13 +1078,21 @@ body.dark .prime-cell.is-prime {
       <div class="options-grid" id="optionsGrid"></div>
     </div>
   </div>
-
+  
 </div>
 
+<!-- ══════════════ LEARN DETAIL ══════════════ -->
+<div class="screen" id="sLearnDetail">
+  <div class="top-bar">
+    <button class="back-btn" id="detailBack">‹</button>
+    <div class="top-title" id="detailTitle">Table</div>
+  </div>
+  <div class="detail-body" id="detailBody"></div>
+</div>
 
 <!-- ══════════════ RESULTS (standalone screen) ══════════════ -->
 <div class="screen" id="sResults">
-  <div class="top-bar" style="position:relative;z-index:1;flex-shrink:0">
+  <div class="top-bar">
     <button class="back-btn" id="resultsHomeBtn">‹</button>
     <div class="top-title">Results</div>
     <button class="icon-btn" id="resultsRetryBtn">↺</button>
@@ -1776,10 +1784,8 @@ function startQuiz(){
 
   document.getElementById('testSetup').style.display = 'none';
   const quiz = document.getElementById('testQuiz');
-  const results = document.getElementById('testResults');
   quiz.classList.add('show'); quiz.style.display = 'none';
   quiz.style.display = '';
-  results.classList.remove('show'); results.style.display = 'none';
 
   renderQuestion();
 }
@@ -1904,11 +1910,6 @@ function showResults(){
   updateHomeWeakSub();
 
   go('sResults');
-  requestAnimationFrame(()=>{
-    const bar = document.querySelector('#sResults .top-bar');
-    const scroll = document.querySelector('#sResults .results-scroll');
-    if(bar && scroll){ scroll.style.top = bar.offsetHeight + 'px'; }
-  });
 }
 
 /* ════════════════════════════════════
@@ -2078,8 +2079,6 @@ function bindAll(){
     document.getElementById('testSetup').style.display = '';
     document.getElementById('testQuiz').classList.remove('show');
     document.getElementById('testQuiz').style.display = 'none';
-    document.getElementById('testResults').classList.remove('show');
-    document.getElementById('testResults').style.display = 'none';
     go('sHome');
   });
 
