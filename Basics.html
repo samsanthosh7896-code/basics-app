@@ -626,15 +626,20 @@ body.dark {
 #testResults { display: none; flex-direction: column; }
 #testResults.show { display: flex; flex-direction: column; }
 .results-scroll {
-  flex: 1; min-height: 0;
+  flex: 1;
+  min-height: 0;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y;
   overscroll-behavior: contain;
-  padding: 20px 14px calc(var(--safe-bottom) + 60px);
-  display: flex; flex-direction: column;
-  gap: 12px; align-items: center;
+  padding: 16px 14px calc(var(--safe-bottom) + 80px);
+  box-sizing: border-box;
+}
+.results-scroll > * {
+  max-width: 420px;
   width: 100%;
+  margin: 0 auto 12px;
+  display: block;
 }
 .result-hero {
   width: 100%; max-width: 420px; text-align: center; padding: 8px 0 4px;
