@@ -626,14 +626,16 @@ body.dark {
 #testResults { display: none; flex-direction: column; }
 #testResults.show { display: flex; flex-direction: column; }
 .results-scroll {
-  flex: 1; min-height: 0;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y;
-  padding: 20px 14px calc(var(--safe-bottom) + 80px);
-  display: flex; flex-direction: column;
-  gap: 12px; align-items: center;
-  width: 100%;
+  padding: 20px 14px calc(var(--safe-bottom) + 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
 }
 .result-hero {
   width: 100%; max-width: 420px; text-align: center; padding: 8px 0 4px;
@@ -1076,42 +1078,13 @@ body.dark .prime-cell.is-prime {
       <div class="options-grid" id="optionsGrid"></div>
     </div>
   </div>
-  </div><!-- end testResults placeholder -->
-      <div class="result-stats-card anim-fade">
-        <div class="result-stats-grid">
-          <div class="result-stat"><span class="result-stat-val" id="rCorrect">-</span><span class="result-stat-lbl">Correct</span></div>
-          <div class="result-stat"><span class="result-stat-val" id="rWrong">-</span><span class="result-stat-lbl">Wrong</span></div>
-          <div class="result-stat"><span class="result-stat-val" id="rScore">-</span><span class="result-stat-lbl">Score</span></div>
-          <div class="result-stat"><span class="result-stat-val" id="rTotal">-</span><span class="result-stat-lbl">Total Qs</span></div>
-        </div>
-      </div>
-      <div class="weak-result-card anim-fade" id="weakResultCard" style="display:none">
-        <div class="weak-result-head">⚠️ Weak Areas Updated</div>
-        <div id="weakResultList"></div>
-      </div>
-      <div class="review-card anim-fade" id="reviewCard" style="display:none">
-        <div class="review-card-head">
-          <span>📋 Question Review</span>
-          <span id="reviewCardCount"></span>
-        </div>
-        <div id="reviewList"></div>
-      </div>
-    </div>
-  </div>
+
 </div>
 
-<!-- ══════════════ LEARN DETAIL ══════════════ -->
-<div class="screen" id="sLearnDetail">
-  <div class="top-bar">
-    <button class="back-btn" id="detailBack">‹</button>
-    <div class="top-title" id="detailTitle">Table</div>
-  </div>
-  <div class="detail-body" id="detailBody"></div>
-</div>
 
 <!-- ══════════════ RESULTS (standalone screen) ══════════════ -->
 <div class="screen" id="sResults">
-  <div class="top-bar">
+  <div class="top-bar" style="position:relative;z-index:1;flex-shrink:0">
     <button class="back-btn" id="resultsHomeBtn">‹</button>
     <div class="top-title">Results</div>
     <button class="icon-btn" id="resultsRetryBtn">↺</button>
@@ -1931,6 +1904,11 @@ function showResults(){
   updateHomeWeakSub();
 
   go('sResults');
+  requestAnimationFrame(()=>{
+    const bar = document.querySelector('#sResults .top-bar');
+    const scroll = document.querySelector('#sResults .results-scroll');
+    if(bar && scroll){ scroll.style.top = bar.offsetHeight + 'px'; }
+  });
 }
 
 /* ════════════════════════════════════
