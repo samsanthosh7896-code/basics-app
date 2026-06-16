@@ -1,4 +1,4 @@
-const CACHE_NAME = 'basics-v3';
+const CACHE_NAME = 'basics-v4';
 
 const PRECACHE_URLS = [
   './Basics.html',
